@@ -9,7 +9,7 @@ public class QNCache {
     //region Making the class testable
     private Long mockedDate;
 
-    public long now() {
+    private long now() {
         if (mockedDate == null) {
             return System.currentTimeMillis();
         } else {
