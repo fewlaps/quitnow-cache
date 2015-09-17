@@ -23,12 +23,15 @@ public class QNCache {
     }
     //endregion
 
-    HashMap<String, QNCacheBean> cache = new HashMap();
+    private HashMap<String, QNCacheBean> cache = new HashMap();
 
     public void set(String key, Object value, long keepAliveInSeconds) {
         cache.put(key, new QNCacheBean(value, now(), keepAliveInSeconds));
     }
 
+    /**
+     * Gets an element from the cache.
+     */
     public Object get(String key) {
         QNCacheBean retrievedValue = cache.get(key);
         if (retrievedValue == null || !retrievedValue.isAlive(now())) {
@@ -38,6 +41,10 @@ public class QNCache {
         }
     }
 
+    /**
+     * Gets an element from the cache. If the element exists but it's dead,
+     * it will be removed of the cache, to free memory
+     */
     public Object getAndRemoveIfDead(String key) {
         QNCacheBean retrievedValue = cache.get(key);
         if (retrievedValue == null) {
@@ -54,10 +61,16 @@ public class QNCache {
         cache.remove(key);
     }
 
+    /**
+     * Removes all the elements of the cache, ignoring if they're dead or alive
+     */
     public void removeAll() {
         cache.clear();
     }
 
+    /**
+     * Removes the dead elements of the cache, to free memory
+     */
     public void removeTooOldValues() {
         Iterator it = cache.entrySet().iterator();
         while (it.hasNext()) {
@@ -69,10 +82,16 @@ public class QNCache {
         }
     }
 
+    /**
+     * A quick way to call sizeCountingOnlyAliveElements()
+     */
     public int size() {
         return sizeCountingOnlyAliveElements();
     }
 
+    /**
+     * Counts how much alive elements are living in the cache
+     */
     public int sizeCountingOnlyAliveElements() {
         int size = 0;
         Iterator it = cache.entrySet().iterator();
@@ -86,10 +105,16 @@ public class QNCache {
         return size;
     }
 
+    /**
+     * Counts how much elements are living in the cache, ignoring if they are dead or alive
+     */
     public int sizeCountingDeadAndAliveElements() {
         return cache.size();
     }
 
+    /**
+     * The common isEmpty() method, but only looking for alive elements
+     */
     public boolean isEmpty() {
         return sizeCountingOnlyAliveElements() == 0;
     }
