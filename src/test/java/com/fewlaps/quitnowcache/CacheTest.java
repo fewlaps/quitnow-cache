@@ -5,12 +5,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public class CacheTest {
-
-    public static final String A_KEY = "akey";
-    public static final String A_VALUE = "avalue";
-
-    public static final long FOREVER = 0;
+public class CacheTest extends BaseTest {
 
     QNCache cache;
 
