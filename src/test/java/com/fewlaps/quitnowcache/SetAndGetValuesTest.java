@@ -3,8 +3,7 @@ package com.fewlaps.quitnowcache;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 
 public class SetAndGetValuesTest extends BaseTest {
 
@@ -111,5 +110,15 @@ public class SetAndGetValuesTest extends BaseTest {
         cache.set(A_KEY, null, ONE_SECOND);
 
         assertNull(cache.get(A_KEY));
+    }
+
+    @Test
+    public void containsReturnsTrueIfSomethingExists() {
+        cache.set(A_KEY, A_VALUE, THREE_DAYS);
+
+        assertTrue(cache.contains(A_KEY));
+    }
+    public void containsReturnsFalseSomethingDoesntExist() {
+        assertFalse(cache.contains(A_KEY));
     }
 }

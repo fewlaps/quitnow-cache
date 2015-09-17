@@ -120,4 +120,8 @@ public class QNCache {
     public boolean isEmpty() {
         return sizeCountingOnlyAliveElements() == 0;
     }
+
+    public boolean contains(String key) {
+        return get(key) != null;
+    }
 }
