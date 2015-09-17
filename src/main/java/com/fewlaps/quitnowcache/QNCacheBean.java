@@ -4,6 +4,9 @@ package com.fewlaps.quitnowcache;
  * This class is not public 'cause we'll hide the implementation of the QNCache itself
  */
 class QNCacheBean {
+
+    public static final int FOREVER_KEEPALIVE = 0;
+
     private long creationDate;
     private long keepAlive;
     private Object value;
@@ -15,6 +18,14 @@ class QNCacheBean {
     }
 
     public boolean isAlive(long now) {
-        return creationDate + keepAlive > now;
+        if (FOREVER_KEEPALIVE == keepAlive) {
+            return true;
+        } else {
+            return creationDate + keepAlive > now;
+        }
+    }
+
+    public Object getValue() {
+        return value;
     }
 }
