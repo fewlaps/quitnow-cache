@@ -1,0 +1,11 @@
+language: java
+jdk:
+  - oraclejdk7
+  - oraclejdk8
+  - openjdk7
+ 
+before_install:
+ - chmod +x gradlew
+
+after_success:
+ - ./gradlew cobertura coveralls
