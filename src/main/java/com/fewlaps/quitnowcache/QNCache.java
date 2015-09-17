@@ -26,7 +26,9 @@ public class QNCache {
     private HashMap<String, QNCacheBean> cache = new HashMap();
 
     public void set(String key, Object value, long keepAliveInSeconds) {
-        cache.put(key, new QNCacheBean(value, now(), keepAliveInSeconds));
+        if (keepAliveInSeconds >= 0) {
+            cache.put(key, new QNCacheBean(value, now(), keepAliveInSeconds));
+        }
     }
 
     /**

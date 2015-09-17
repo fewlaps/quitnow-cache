@@ -52,7 +52,7 @@ public class SetAndGetValuesTest extends BaseTest {
 
         assertNull(cache.get(A_KEY));
         assertEquals(1, cache.size());
-        assertEquals(2, cache.sizeCountingDeadAndAliveElements());
+        assertEquals(1, cache.sizeCountingDeadAndAliveElements());
     }
 
     @Test
