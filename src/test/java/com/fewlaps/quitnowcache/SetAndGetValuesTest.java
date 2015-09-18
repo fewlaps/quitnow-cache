@@ -55,13 +55,37 @@ public class SetAndGetValuesTest extends BaseTest {
     }
 
     @Test
-    public void gettingADeadValueWithGetAndRemoveIfDeadWorks() {
+    public void gettingAIgnoredValueWithGetAndRemoveIfDeadWorks() {
         cache.set(A_KEY, A_VALUE, -1);
-        cache.set(ANOTHER_KEY, ANOTHER_VALUE, ONE_SECOND);
+        cache.set(ANOTHER_KEY, ANOTHER_VALUE, THREE_DAYS);
 
         assertNull(cache.getAndRemoveIfDead(A_KEY));
         assertEquals(1, cache.size());
         assertEquals(1, cache.sizeCountingDeadAndAliveElements());
+    }
+
+    @Test
+    public void gettingADeadValueWithGetAndRemoveIfDeadWorks() {
+        cache.set(A_KEY, A_VALUE, ONE_SECOND);
+        cache.set(ANOTHER_KEY, ANOTHER_VALUE, THREE_DAYS);
+
+        cache.setMockDate(twoHoursFromNow());
+
+        assertNull(cache.getAndRemoveIfDead(A_KEY));
+        assertEquals(1, cache.size());
+        assertEquals(1, cache.sizeCountingDeadAndAliveElements());
+    }
+
+    @Test
+    public void gettingAnAliveValueWithGetAndRemoveIfDeadWorks() {
+        cache.set(A_KEY, A_VALUE, ONE_SECOND);
+        cache.set(ANOTHER_KEY, ANOTHER_VALUE, THREE_DAYS);
+
+        cache.setMockDate(twoHoursFromNow());
+
+        assertEquals(ANOTHER_VALUE, cache.getAndRemoveIfDead(ANOTHER_KEY));
+        assertEquals(1, cache.size());
+        assertEquals(2, cache.sizeCountingDeadAndAliveElements());
     }
 
     @Test
@@ -118,6 +142,7 @@ public class SetAndGetValuesTest extends BaseTest {
 
         assertTrue(cache.contains(A_KEY));
     }
+
     public void containsReturnsFalseSomethingDoesntExist() {
         assertFalse(cache.contains(A_KEY));
     }
