@@ -1,9 +1,35 @@
 [![Build Status](https://travis-ci.org/Fewlaps/quitnow-cache.svg?branch=master)](https://travis-ci.org/Fewlaps/quitnow-cache)
 [![Coverage Status](https://coveralls.io/repos/Fewlaps/quitnow-cache/badge.svg?branch=master&service=github)](https://coveralls.io/github/Fewlaps/quitnow-cache?branch=master)
+[![Download](https://api.bintray.com/packages/fewlaps/maven/quitnow-cache/images/download.svg) ](https://bintray.com/fewlaps/maven/quitnow-cache/_latestVersion)
 
 # [QuitNow!](http://quitnowapp.com)'s cache
 A memcached-like Java cache, focused on portability
 
+
+Download
+--------
+
+* Get <a href="https://github.com/Fewlaps/quitnow-cache/releases/download/v1.0/quitnow-cache-1.0.jar">the last .jar</a> 
+
+* Grab via Gradle:
+```groovy
+repositories { jcenter() } }
+    
+compile 'com.fewlaps.quitnowcache:quitnow-cache:1.0'
+```
+* Grab via Maven:
+```xml
+<repository>
+  <id>jcenter</id>
+  <url>http://jcenter.bintray.com</url>
+</repository>
+
+<dependency>
+    <groupId>com.fewlaps.quitnowcache</groupId>
+    <artifactId>quitnow-cache</artifactId>
+    <version>1.0</version>
+</dependency>
+```
 
 
 ## LICENSE ##
