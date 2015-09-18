@@ -6,6 +6,14 @@ import java.util.Map;
 
 public class QNCache {
 
+    boolean threadSafe = true;
+    boolean caseSensitiveKeys = true;
+
+    QNCache(boolean caseSensitiveKeys, boolean threadSafe) {
+        this.caseSensitiveKeys = caseSensitiveKeys;
+        this.threadSafe = threadSafe;
+    }
+
     //region Making the class testable
     private Long mockedDate;
 

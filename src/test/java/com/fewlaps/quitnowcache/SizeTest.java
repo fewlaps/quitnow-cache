@@ -11,7 +11,7 @@ public class SizeTest extends BaseTest {
 
     @Before
     public void init() {
-        cache = new QNCache();
+        cache = new QNCacheBuilder().createQNCache();
     }
 
     @Test

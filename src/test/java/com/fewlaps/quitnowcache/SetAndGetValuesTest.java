@@ -11,7 +11,7 @@ public class SetAndGetValuesTest extends BaseTest {
 
     @Before
     public void init() {
-        cache = new QNCache();
+        cache = new QNCacheBuilder().createQNCache();
     }
 
     @Test
