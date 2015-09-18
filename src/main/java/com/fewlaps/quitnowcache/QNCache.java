@@ -6,12 +6,20 @@ import java.util.Map;
 
 public class QNCache {
 
-    boolean threadSafe = true;
-    boolean caseSensitiveKeys = true;
+    private boolean threadSafe = true;
+    private boolean caseSensitiveKeys = true;
 
     QNCache(boolean caseSensitiveKeys, boolean threadSafe) {
         this.caseSensitiveKeys = caseSensitiveKeys;
         this.threadSafe = threadSafe;
+    }
+
+    public boolean isThreadSafe() {
+        return threadSafe;
+    }
+
+    public boolean isCaseSensitiveKeys() {
+        return caseSensitiveKeys;
     }
 
     //region Making the class testable
