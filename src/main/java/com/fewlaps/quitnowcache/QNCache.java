@@ -34,6 +34,8 @@ public class QNCache {
     private HashMap<String, QNCacheBean> cache = new HashMap();
 
     public void set(String key, Object value, long keepAliveInSeconds) {
+        key = getEffectiveKey(key);
+
         if (keepAliveInSeconds >= 0) {
             cache.put(key, new QNCacheBean(value, now(), keepAliveInSeconds));
         }
@@ -43,6 +45,8 @@ public class QNCache {
      * Gets an element from the cache.
      */
     public Object get(String key) {
+        key = getEffectiveKey(key);
+
         QNCacheBean retrievedValue = cache.get(key);
         if (retrievedValue == null || !retrievedValue.isAlive(now())) {
             return null;
@@ -56,6 +60,8 @@ public class QNCache {
      * it will be removed of the cache, to free memory
      */
     public Object getAndRemoveIfDead(String key) {
+        key = getEffectiveKey(key);
+
         QNCacheBean retrievedValue = cache.get(key);
         if (retrievedValue == null) {
             return null;
@@ -68,6 +74,8 @@ public class QNCache {
     }
 
     public void remove(String key) {
+        key = getEffectiveKey(key);
+
         cache.remove(key);
     }
 
@@ -130,6 +138,19 @@ public class QNCache {
     }
 
     public boolean contains(String key) {
+        key = getEffectiveKey(key);
+
         return get(key) != null;
+    }
+
+    /**
+     * If caseSensitiveKeys is false, it returns a key in lowercase. It will be
+     * the key of all stored values, so the cache will be totally caseinsensitive
+     */
+    private String getEffectiveKey(String key) {
+        if (!caseSensitiveKeys) {
+            return key.toLowerCase();
+        }
+        return key;
     }
 }
