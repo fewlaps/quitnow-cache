@@ -13,7 +13,7 @@ Download
 
 * Grab via Gradle:
 ```groovy
-repositories { jcenter() } }
+repositories { jcenter() }
     
 compile 'com.fewlaps.quitnowcache:quitnow-cache:1.0'
 ```
