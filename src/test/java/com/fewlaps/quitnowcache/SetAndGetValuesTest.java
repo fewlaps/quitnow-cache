@@ -143,6 +143,7 @@ public class SetAndGetValuesTest extends BaseTest {
         assertTrue(cache.contains(A_KEY));
     }
 
+    @Test
     public void containsReturnsFalseSomethingDoesntExist() {
         assertFalse(cache.contains(A_KEY));
     }
