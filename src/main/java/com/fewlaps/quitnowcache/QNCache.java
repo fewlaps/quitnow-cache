@@ -59,7 +59,7 @@ public class QNCache {
         if (retrievedValue == null || !retrievedValue.isAlive(now())) {
             return null;
         } else {
-            return cache.get(key).getValue();
+            return retrievedValue.getValue();
         }
     }
 
