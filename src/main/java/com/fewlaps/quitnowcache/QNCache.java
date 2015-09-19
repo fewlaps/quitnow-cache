@@ -6,16 +6,10 @@ import java.util.Map;
 
 public class QNCache {
 
-    private boolean threadSafe = true;
     private boolean caseSensitiveKeys = true;
 
-    QNCache(boolean caseSensitiveKeys, boolean threadSafe) {
+    QNCache(boolean caseSensitiveKeys) {
         this.caseSensitiveKeys = caseSensitiveKeys;
-        this.threadSafe = threadSafe;
-    }
-
-    public boolean isThreadSafe() {
-        return threadSafe;
     }
 
     public boolean isCaseSensitiveKeys() {

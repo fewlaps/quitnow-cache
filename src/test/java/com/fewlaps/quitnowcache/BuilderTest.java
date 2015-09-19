@@ -14,7 +14,6 @@ public class BuilderTest {
     public void testDefaultBuilder() {
         QNCache cache = new QNCacheBuilder().createQNCache();
 
-        assertTrue(cache.isThreadSafe());
         assertTrue(cache.isCaseSensitiveKeys());
     }
 
@@ -30,19 +29,5 @@ public class BuilderTest {
         QNCache cache = new QNCacheBuilder().setCaseSensitiveKeys(false).createQNCache();
 
         assertFalse(cache.isCaseSensitiveKeys());
-    }
-
-    @Test
-    public void testSettingTrueThreadSafeBuilder() {
-        QNCache cache = new QNCacheBuilder().setThreadSafe(true).createQNCache();
-
-        assertTrue(cache.isThreadSafe());
-    }
-
-    @Test
-    public void testSettingFalseThreadSafeBuilder() {
-        QNCache cache = new QNCacheBuilder().setThreadSafe(false).createQNCache();
-
-        assertFalse(cache.isThreadSafe());
     }
 }
