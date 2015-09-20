@@ -21,7 +21,7 @@ public class ThreadSafeTest extends BaseTest {
     }
 
     @Test
-    public void canEditWhileIteratingWithRandomKeys() {
+    public void canEditWhileIteratingWithRandomKeys() throws InterruptedException {
         final AtomicInteger errors = new AtomicInteger(0);
         final AtomicBoolean writerFinished1 = new AtomicBoolean(false);
         final AtomicBoolean writerFinished2 = new AtomicBoolean(false);
@@ -86,17 +86,13 @@ public class ThreadSafeTest extends BaseTest {
         remover.start();
 
         while (!removerFinished.get() || !readerFinished.get() || !writerFinished1.get() || !writerFinished2.get()) {
-            try {
-                Thread.sleep(100);
-                assertEquals(0, errors.get());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            Thread.sleep(100);
+            assertEquals(0, errors.get());
         }
     }
 
     @Test
-    public void canEditWhileIteratingWithOneKey() {
+    public void canEditWhileIteratingWithOneKey() throws InterruptedException {
         final AtomicInteger errors = new AtomicInteger(0);
         final AtomicBoolean writerFinished1 = new AtomicBoolean(false);
         final AtomicBoolean writerFinished2 = new AtomicBoolean(false);
@@ -161,12 +157,8 @@ public class ThreadSafeTest extends BaseTest {
         remover.start();
 
         while (!removerFinished.get() || !readerFinished.get() || !writerFinished1.get() || !writerFinished2.get()) {
-            try {
-                Thread.sleep(100);
-                assertEquals(0, errors.get());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            Thread.sleep(100);
+            assertEquals(0, errors.get());
         }
     }
 }
