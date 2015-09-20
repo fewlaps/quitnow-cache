@@ -11,8 +11,6 @@ public class MemoryReleaseTest extends BaseTest {
         try {
             QNCache cache = new QNCacheBuilder().createQNCache();
 
-            int iterations = 3;
-
             //adding 3 values that will be alive for 1 second, 2 seconds, 3 seconds.
             cache.set("1", A_VALUE, 1000);
             cache.set("2", A_VALUE, 2000);
@@ -44,8 +42,6 @@ public class MemoryReleaseTest extends BaseTest {
         try {
             QNCache cache = new QNCacheBuilder().setAutoReleaseInSeconds(1).createQNCache();
 
-            int iterations = 3;
-
             //adding 3 values that will be alive for 1 second, 2 seconds, 3 seconds.
             cache.set("1", A_VALUE, 1000);
             cache.set("2", A_VALUE, 2000);
@@ -53,11 +49,7 @@ public class MemoryReleaseTest extends BaseTest {
 
             //checking that forgettingOldValues work
             assertEquals(3, cache.sizeCountingDeadAndAliveElements());
-            Thread.sleep(1500);
-            assertEquals(2, cache.sizeCountingDeadAndAliveElements());
-            Thread.sleep(1000);
-            assertEquals(1, cache.sizeCountingDeadAndAliveElements());
-            Thread.sleep(1000);
+            Thread.sleep(5000);
             assertEquals(0, cache.sizeCountingDeadAndAliveElements());
         } catch (InterruptedException e) {
             e.printStackTrace();
