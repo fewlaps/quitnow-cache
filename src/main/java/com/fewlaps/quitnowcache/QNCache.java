@@ -28,7 +28,7 @@ public class QNCache {
                 public void run() {
                     removeTooOldValues();
                 }
-            }, 0, autoReleaseInSeconds, TimeUnit.SECONDS);
+            }, autoReleaseInSeconds, autoReleaseInSeconds, TimeUnit.SECONDS);
         }
     }
 

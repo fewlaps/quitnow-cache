@@ -4,9 +4,6 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-/**
- * Created by Roc Boronat on 18/09/2015.
- */
 public class BuilderTest {
 
     @Test
