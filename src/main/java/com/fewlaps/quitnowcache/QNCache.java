@@ -32,11 +32,11 @@ public class QNCache {
         }
     }
 
-    public boolean isCaseSensitiveKeys() {
+    boolean isCaseSensitiveKeys() {
         return caseSensitiveKeys;
     }
 
-    public Integer getAutoReleaseInSeconds() {
+    Integer getAutoReleaseInSeconds() {
         return autoReleaseInSeconds;
     }
 
@@ -52,7 +52,7 @@ public class QNCache {
     }
 
     @Deprecated
-    public void setMockDate(long date) {
+    void setMockDate(long date) {
         mockedDate = date;
     }
     //endregion
@@ -85,7 +85,7 @@ public class QNCache {
      * Gets an element from the cache. If the element exists but it's dead,
      * it will be removed of the cache, to free memory
      */
-    public Object getAndRemoveIfDead(String key) {
+    Object getAndRemoveIfDead(String key) {
         key = getEffectiveKey(key);
 
         QNCacheBean retrievedValue = cache.get(key);
@@ -115,7 +115,7 @@ public class QNCache {
     /**
      * Removes the dead elements of the cache, to free memory
      */
-    public void removeTooOldValues() {
+    void removeTooOldValues() {
         Iterator it = cache.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry pair = (Map.Entry) it.next();
@@ -127,7 +127,7 @@ public class QNCache {
     }
 
     /**
-     * A quick way to call sizeCountingOnlyAliveElements()
+     * Counts how much alive elements are living in the cache
      */
     public int size() {
         return sizeCountingOnlyAliveElements();
@@ -136,7 +136,7 @@ public class QNCache {
     /**
      * Counts how much alive elements are living in the cache
      */
-    public int sizeCountingOnlyAliveElements() {
+    int sizeCountingOnlyAliveElements() {
         int size = 0;
         Iterator it = cache.entrySet().iterator();
         while (it.hasNext()) {
@@ -152,7 +152,7 @@ public class QNCache {
     /**
      * Counts how much elements are living in the cache, ignoring if they are dead or alive
      */
-    public int sizeCountingDeadAndAliveElements() {
+    int sizeCountingDeadAndAliveElements() {
         return cache.size();
     }
 
