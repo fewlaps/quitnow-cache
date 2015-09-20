@@ -29,6 +29,14 @@ public class SetAndGetValuesTest extends BaseTest {
     }
 
     @Test
+    public void savingSomethingWithoudSpecifyingTheKeepaliveValueShouldReturnTheSameAfterThreeDays() {
+        cache.set(A_KEY, A_VALUE);
+        cache.setMockDate(threeDaysFromNow());
+
+        assertEquals(A_VALUE, cache.get(A_KEY));
+    }
+
+    @Test
     public void savingSomethingForeverShouldReturnTheSameAfterThreeDays() {
         cache.set(A_KEY, A_VALUE, FOREVER);
         cache.setMockDate(threeDaysFromNow());
