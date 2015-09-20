@@ -31,6 +31,14 @@ public class BuilderTest {
     }
 
     @Test
+    public void testSettingMinusOneAutoReleaseSecondsBuilder() {
+        QNCache cache = new QNCacheBuilder().setAutoReleaseInSeconds(-1).createQNCache();
+
+        assertTrue(cache.isCaseSensitiveKeys());
+        assertNull(cache.getAutoReleaseInSeconds());
+    }
+
+    @Test
     public void testSetting10AutoReleaseSecondsBuilder() {
         QNCache cache = new QNCacheBuilder().setAutoReleaseInSeconds(10).createQNCache();
 

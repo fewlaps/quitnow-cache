@@ -14,13 +14,15 @@ public class QNCache {
 
     public QNCache(boolean caseSensitiveKeys, Integer autoReleaseInSeconds) {
         this.caseSensitiveKeys = caseSensitiveKeys;
-        this.autoReleaseInSeconds = autoReleaseInSeconds;
+        if (autoReleaseInSeconds != null && autoReleaseInSeconds > 0) { //Moronproof! :)
+            this.autoReleaseInSeconds = autoReleaseInSeconds;
+        }
 
-        startAutoReleaseServiceIfNeeded(autoReleaseInSeconds);
+        startAutoReleaseServiceIfNeeded();
     }
 
-    private void startAutoReleaseServiceIfNeeded(Integer autoReleaseInSeconds) {
-        if (autoReleaseInSeconds != null && autoReleaseInSeconds > 0) {
+    private void startAutoReleaseServiceIfNeeded() {
+        if (autoReleaseInSeconds != null) {
             ScheduledExecutorService ses = Executors.newSingleThreadScheduledExecutor();
 
             ses.scheduleAtFixedRate(new Runnable() {
@@ -58,6 +60,10 @@ public class QNCache {
     //endregion
 
     private HashMap<String, QNCacheBean> cache = new HashMap();
+
+    public void set(String key, Object value) {
+        set(key, value, 0); // Keep it forever
+    }
 
     public void set(String key, Object value, long keepAliveInMillis) {
         key = getEffectiveKey(key);
