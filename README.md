@@ -5,53 +5,55 @@
 # [QuitNow!](http://quitnowapp.com)'s cache
 A memcached-like Java cache, focused on portability, great for Android.
 
-Before this library, QuitNow! app (and lots of apps we've seen) are caching things until the user or the system kills the app. And we know that this isn't not cool, but developing a cache for that little improvement is not a trivial task. So, we decided to return the work to the open source community by writing this really simple cache, allowing developers to keep information only for a limited time.
+Before this library, QuitNow! and lots of apps we've seen are caching things until the system kills the app. That's not cool. In the other hand, developing a cache for that little improvement is not trivial. So, we decided to return the work to the open source community by writing this really simple cache, allowing developers to keep information only for a limited time.
 
 And we've done it using TDD, so it's totally tested. [Check the tests!](https://github.com/Fewlaps/quitnow-cache/tree/master/src/test/java/com/fewlaps/quitnowcache) :·)
 
-Using it
---------
+The sample
+----------
 
 ```java
-QNCache cache; // Let me introduce you: The simplest memcached-like cache!
+QNCache cache = new QNCacheBuilder().createQNCache();
 
-//It has a fancy builder with fancy default options.
-cache = new QNCacheBuilder().createQNCache();
+cache.set("key", "value", 60 * 1000); // It can store things for a minute,
+cache.set("key", "value", 60 * 60 * 1000); // for an hour,
+cache.set("key", "value", 0); // or forever.
+cache.set("key", "value"); // And also for the short version of forever.
 
-cache.set("Key", "Value"); //you can save things in the cache,
-cache.get("Key"); //get it again,
-cache.remove("Key"); //and remove it if you want.
+cache.get("key"); // It can get them again,
+cache.remove("key"); // and remove it if you want.
 
-//By the way, you can save only it for a second, as you do with memcached.
-cache.set("Key", "Value", 1000); //save it for a second
-cache.get("Key"); //it will work as usual,
-Thread.sleep(1000); //but after a second,
-cache.get("Key"); //it will become null.
+cache.get("unExistingKey"); // If something doesn't exists, it returns null
+cache.get("tooOldKey"); // The same if a key is too old
 
-//In addition, you can save all kinds of Objects:
-cache.set("API response", new ApiResponse, 60*1000); //This is the most interesting use of the library! :·)
+cache.set("AnInteger", new Integer(42)); // You can save all kind of Objects...
+cache.set("ACollection", new ArrayList()); // ...whatever you want
 
-//What about the memory? By default, all the instances will be stored unless you remove it.
-//But there's a way to remove all the instances that are too old: the autorelease parameter.
-//You can create an autoreleased QNCache using its builder.
-//For example, cleaning it every minute:
-cache = new QNCacheBuilder().setAutoReleaseInSeconds(60).createQNCache();
-
-//And, what about the keys? Are they case sensitive?
-//By default, yes, as it is the common Java behaviour.
-//But you can also define it at building time:
-cache = new QNCacheBuilder().setCaseSensitiveKeys(false).createQNCache();
-
-//To end this beautiful writing, let's detail the builder default values:
-cache = new QNCacheBuilder()
-    .setAutoReleaseInSeconds(60) //default null: it means autorelease disabled
-    .setCaseSensitiveKeys(false) //default true
-    .createQNCache();
+cache.removeAll(); // And also clean it
 ```
 
+Let's talk about the memory
+---------------------------
+By default, the cache stores a reference to all stored instances, doesn't matter if they're alive or they are too old. If you plan to store huge datasets, you can create it with an auto releaser. Then the cache will remove the old elements every 60 seconds, for example.
 
-Download
---------
+```java
+QNCache cache = new QNCacheBuilder().setAutoReleaseInSeconds(1).createQNCache(); //frees the memory every second
+QNCache cache = new QNCacheBuilder().setAutoReleaseInSeconds(60).createQNCache(); //frees the memory every minute
+QNCache cache = new QNCacheBuilder().setAutoReleaseInSeconds(60*60).createQNCache(); //frees the memory every hour
+QNCache cache = new QNCacheBuilder().createQNCache(); //never frees the memory
+```
+
+Are the keys case sensitive?
+---------------------------
+By default, yes. But you can also specify it at building time.
+
+```java
+QNCache cache = new QNCacheBuilder().setCaseSensitiveKeys(true).createQNCache(); //"key" and "KEY" will be different items
+QNCache cache = new QNCacheBuilder().setCaseSensitiveKeys(false).createQNCache(); //"key" and "KEY" will be the same
+QNCache cache = new QNCacheBuilder().createQNCache(); //"key" and "KEY" will be different items
+```
+
+#Download
 
 * Get <a href="https://github.com/Fewlaps/quitnow-cache/releases/download/v1.1/quitnow-cache-1.1.jar">the last .jar</a> 
 
