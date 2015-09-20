@@ -29,7 +29,8 @@ cache.get("tooOldKey"); // The same if a key is too old
 cache.set("AnInteger", new Integer(42)); // You can save all kind of Objects...
 cache.set("ACollection", new ArrayList()); // ...whatever you want
 
-cache.removeAll(); // And also clean it
+cache.removeAll(); // You can also clean it,
+cache.size(); // and ask it how many elements it has
 ```
 
 Let's talk about the memory
