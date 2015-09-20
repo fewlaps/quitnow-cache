@@ -11,7 +11,7 @@ import static org.junit.Assert.assertEquals;
 
 public class ThreadSafeTest extends BaseTest {
 
-    static final int ITERATIONS = 50000;
+    static final int ITERATIONS = 10000;
 
     QNCache cache;
 
