@@ -13,18 +13,27 @@ public class MemoryReleaseTest extends BaseTest {
 
             int iterations = 3;
 
-            //adding 10 values that will be alive for 1 second, 2 seconds, 3 seconds...
-            for (int i = 0; i < iterations; i++) {
-                cache.set("" + i, A_VALUE, i * 1000);
-            }
+            //adding 3 values that will be alive for 1 second, 2 seconds, 3 seconds.
+            cache.set("1", A_VALUE, 1000);
+            cache.set("2", A_VALUE, 2000);
+            cache.set("3", A_VALUE, 3000);
 
             //checking that forgettingOldValues work
-            for (int i = iterations; i > 0; i--) {
-                cache.removeTooOldValues();
-                assertEquals(i, cache.sizeCountingDeadAndAliveElements());
-                Thread.sleep(1000);
+            cache.removeTooOldValues();
+            assertEquals(3, cache.sizeCountingDeadAndAliveElements());
 
-            }
+            Thread.sleep(1000);
+            cache.removeTooOldValues();
+            assertEquals(2, cache.sizeCountingDeadAndAliveElements());
+
+            Thread.sleep(1000);
+            cache.removeTooOldValues();
+            assertEquals(1, cache.sizeCountingDeadAndAliveElements());
+
+            Thread.sleep(1000);
+            cache.removeTooOldValues();
+            assertEquals(0, cache.sizeCountingDeadAndAliveElements());
+
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -37,17 +46,19 @@ public class MemoryReleaseTest extends BaseTest {
 
             int iterations = 3;
 
-            //adding 10 values that will be alive for 1 second, 2 seconds, 3 seconds...
-            for (int i = 0; i < iterations; i++) {
-                cache.set("" + i, A_VALUE, i * 1000);
-            }
+            //adding 3 values that will be alive for 1 second, 2 seconds, 3 seconds.
+            cache.set("1", A_VALUE, 1000);
+            cache.set("2", A_VALUE, 2000);
+            cache.set("3", A_VALUE, 3000);
 
             //checking that forgettingOldValues work
-            Thread.sleep(500);
-            for (int i = iterations; i > 0; i--) {
-                assertEquals(i, cache.sizeCountingDeadAndAliveElements());
-                Thread.sleep(1000);
-            }
+            assertEquals(3, cache.sizeCountingDeadAndAliveElements());
+            Thread.sleep(1500);
+            assertEquals(2, cache.sizeCountingDeadAndAliveElements());
+            Thread.sleep(1000);
+            assertEquals(1, cache.sizeCountingDeadAndAliveElements());
+            Thread.sleep(1000);
+            assertEquals(0, cache.sizeCountingDeadAndAliveElements());
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
