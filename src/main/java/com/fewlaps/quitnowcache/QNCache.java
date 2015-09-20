@@ -3,17 +3,41 @@ package com.fewlaps.quitnowcache;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class QNCache {
 
     private boolean caseSensitiveKeys = true;
+    private Integer autoReleaseInSeconds = null;
 
-    QNCache(boolean caseSensitiveKeys) {
+    public QNCache(boolean caseSensitiveKeys, Integer autoReleaseInSeconds) {
         this.caseSensitiveKeys = caseSensitiveKeys;
+        this.autoReleaseInSeconds = autoReleaseInSeconds;
+
+        startAutoReleaseServiceIfNeeded(autoReleaseInSeconds);
+    }
+
+    private void startAutoReleaseServiceIfNeeded(Integer autoReleaseInSeconds) {
+        if (autoReleaseInSeconds != null && autoReleaseInSeconds > 0) {
+            ScheduledExecutorService ses = Executors.newSingleThreadScheduledExecutor();
+
+            ses.scheduleAtFixedRate(new Runnable() {
+                @Override
+                public void run() {
+                    removeTooOldValues();
+                }
+            }, 0, autoReleaseInSeconds, TimeUnit.SECONDS);
+        }
     }
 
     public boolean isCaseSensitiveKeys() {
         return caseSensitiveKeys;
+    }
+
+    public Integer getAutoReleaseInSeconds() {
+        return autoReleaseInSeconds;
     }
 
     //region Making the class testable
@@ -35,11 +59,11 @@ public class QNCache {
 
     private HashMap<String, QNCacheBean> cache = new HashMap();
 
-    public void set(String key, Object value, long keepAliveInSeconds) {
+    public void set(String key, Object value, long keepAliveInMillis) {
         key = getEffectiveKey(key);
 
-        if (keepAliveInSeconds >= 0) {
-            cache.put(key, new QNCacheBean(value, now(), keepAliveInSeconds));
+        if (keepAliveInMillis >= 0) {
+            cache.put(key, new QNCacheBean(value, now(), keepAliveInMillis));
         }
     }
 

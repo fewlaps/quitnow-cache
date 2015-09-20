@@ -8,20 +8,20 @@ class QNCacheBean {
     public static final int FOREVER_KEEPALIVE = 0;
 
     private long creationDate;
-    private long keepAlive;
+    private long keepAliveInMillis;
     private Object value;
 
-    public QNCacheBean(Object value, long creationDate, long keepAlive) {
+    public QNCacheBean(Object value, long creationDate, long keepAliveInMillis) {
         this.creationDate = creationDate;
-        this.keepAlive = keepAlive;
+        this.keepAliveInMillis = keepAliveInMillis;
         this.value = value;
     }
 
     public boolean isAlive(long now) {
-        if (FOREVER_KEEPALIVE == keepAlive) {
+        if (FOREVER_KEEPALIVE == keepAliveInMillis) {
             return true;
         } else {
-            return creationDate + keepAlive > now;
+            return creationDate + keepAliveInMillis > now;
         }
     }
 
