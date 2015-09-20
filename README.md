@@ -53,13 +53,13 @@ cache = new QNCacheBuilder()
 Download
 --------
 
-* Get <a href="https://github.com/Fewlaps/quitnow-cache/releases/download/v1.0/quitnow-cache-1.0.jar">the last .jar</a> 
+* Get <a href="https://github.com/Fewlaps/quitnow-cache/releases/download/v1.1/quitnow-cache-1.1.jar">the last .jar</a> 
 
 * Grab via Gradle:
 ```groovy
 repositories { jcenter() }
     
-compile 'com.fewlaps.quitnowcache:quitnow-cache:1.0'
+compile 'com.fewlaps.quitnowcache:quitnow-cache:1.1'
 ```
 * Grab via Maven:
 ```xml
@@ -71,7 +71,7 @@ compile 'com.fewlaps.quitnowcache:quitnow-cache:1.0'
 <dependency>
     <groupId>com.fewlaps.quitnowcache</groupId>
     <artifactId>quitnow-cache</artifactId>
-    <version>1.0</version>
+    <version>1.1</version>
 </dependency>
 ```
 
