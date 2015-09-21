@@ -32,7 +32,6 @@ public class MemoryReleaseTest extends BaseTest {
         assertEquals(0, cache.sizeCountingDeadAndAliveElements());
     }
 
-    @Test
     public void autoReleaseMemoryWorks() throws InterruptedException {
         QNCache cache = new QNCacheBuilder().setAutoReleaseInSeconds(1).createQNCache();
 
