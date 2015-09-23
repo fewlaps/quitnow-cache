@@ -98,7 +98,7 @@ public class QNCache {
         if (retrievedValue == null) {
             return null;
         } else if (retrievedValue.isAlive(now())) {
-            return cache.get(key).getValue();
+            return retrievedValue.getValue();
         } else {
             cache.remove(key);
             return null;
