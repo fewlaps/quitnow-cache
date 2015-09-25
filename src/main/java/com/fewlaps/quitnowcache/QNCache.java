@@ -1,5 +1,7 @@
 package com.fewlaps.quitnowcache;
 
+import org.joda.time.DateTime;
+
 import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -44,22 +46,9 @@ public class QNCache {
         return autoReleaseInSeconds;
     }
 
-    //region Making the class testable
-    private Long mockedDate;
-
     private long now() {
-        if (mockedDate == null) {
-            return System.currentTimeMillis();
-        } else {
-            return mockedDate;
-        }
+        return new DateTime().toDate().getTime();
     }
-
-    @Deprecated
-    void setMockDate(long date) {
-        mockedDate = date;
-    }
-    //endregion
 
     private ConcurrentHashMap<String, QNCacheBean> cache;
 

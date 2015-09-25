@@ -39,4 +39,10 @@ publish {
     website = 'https://github.com/Fewlaps/quitnow-cache'
 }
 
+dependencies {
+    compile 'joda-time:joda-time:2.3'
+
+    testCompile 'org.mockito:mockito-all:1.8.4'
+}
+
 cobertura.coverageFormats = ['html', 'xml'] // coveralls plugin depends on xml format report
