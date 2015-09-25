@@ -76,14 +76,14 @@ public class QNCache {
     /**
      * Gets an element from the cache.
      */
-    public Object get(String key) {
+    public <T> T get(String key) {
         key = getEffectiveKey(key);
 
         QNCacheBean retrievedValue = cache.get(key);
         if (retrievedValue == null || !retrievedValue.isAlive(now())) {
             return null;
         } else {
-            return retrievedValue.getValue();
+            return (T) retrievedValue.getValue();
         }
     }
 
