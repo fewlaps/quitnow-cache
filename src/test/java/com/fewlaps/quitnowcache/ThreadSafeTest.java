@@ -1,6 +1,7 @@
 package com.fewlaps.quitnowcache;
 
 import com.fewlaps.quitnowcache.util.RandomGenerator;
+import org.joda.time.DateTimeUtils;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -17,6 +18,7 @@ public class ThreadSafeTest extends BaseTest {
 
     @Before
     public void init() {
+        DateTimeUtils.setCurrentMillisSystem();
         cache = new QNCacheBuilder().createQNCache();
     }
 

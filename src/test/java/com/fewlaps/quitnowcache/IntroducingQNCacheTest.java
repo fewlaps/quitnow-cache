@@ -1,10 +1,17 @@
 package com.fewlaps.quitnowcache;
 
+import org.joda.time.DateTimeUtils;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
 
 public class IntroducingQNCacheTest {
+
+    @Before
+    public void init() {
+        DateTimeUtils.setCurrentMillisSystem();
+    }
 
     @Test
     public void theCodeOfTheReadmeWorks() {

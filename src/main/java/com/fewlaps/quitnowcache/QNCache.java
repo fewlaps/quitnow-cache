@@ -1,8 +1,10 @@
 package com.fewlaps.quitnowcache;
 
-import java.util.HashMap;
+import org.joda.time.DateTime;
+
 import java.util.Iterator;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -17,6 +19,8 @@ public class QNCache {
         if (autoReleaseInSeconds != null && autoReleaseInSeconds > 0) { //Moronproof! :)
             this.autoReleaseInSeconds = autoReleaseInSeconds;
         }
+
+        cache = new ConcurrentHashMap();
 
         startAutoReleaseServiceIfNeeded();
     }
@@ -42,24 +46,11 @@ public class QNCache {
         return autoReleaseInSeconds;
     }
 
-    //region Making the class testable
-    private Long mockedDate;
-
     private long now() {
-        if (mockedDate == null) {
-            return System.currentTimeMillis();
-        } else {
-            return mockedDate;
-        }
+        return new DateTime().toDate().getTime();
     }
 
-    @Deprecated
-    void setMockDate(long date) {
-        mockedDate = date;
-    }
-    //endregion
-
-    private HashMap<String, QNCacheBean> cache = new HashMap();
+    private ConcurrentHashMap<String, QNCacheBean> cache;
 
     public void set(String key, Object value) {
         set(key, value, 0); // Keep it forever

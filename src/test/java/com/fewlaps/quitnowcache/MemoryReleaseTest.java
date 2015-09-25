@@ -1,10 +1,17 @@
 package com.fewlaps.quitnowcache;
 
+import org.joda.time.DateTimeUtils;
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
 public class MemoryReleaseTest extends BaseTest {
+
+    @Before
+    public void init() {
+        DateTimeUtils.setCurrentMillisSystem();
+    }
 
     @Test
     public void manualReleaseMemoryWorks() throws InterruptedException {
