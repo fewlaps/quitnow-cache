@@ -1,7 +1,7 @@
 package com.fewlaps.quitnowcache;
 
-import com.fewlaps.quitnowcache.beam.ObjectTestOne;
-import com.fewlaps.quitnowcache.beam.ObjectTestTwo;
+import com.fewlaps.quitnowcache.bean.ObjectTestOne;
+import com.fewlaps.quitnowcache.bean.ObjectTestTwo;
 import org.joda.time.DateTimeUtils;
 import org.junit.Before;
 import org.junit.Test;
