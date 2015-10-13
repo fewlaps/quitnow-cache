@@ -1,6 +1,5 @@
 package com.fewlaps.quitnowcache;
 
-import org.joda.time.DateTimeUtils;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -9,11 +8,13 @@ import static org.junit.Assert.*;
 public class SizeTest extends BaseTest {
 
     QNCache cache;
+    MockDateProvider dateProvider;
 
     @Before
     public void init() {
-        DateTimeUtils.setCurrentMillisSystem();
         cache = new QNCacheBuilder().createQNCache();
+        dateProvider = new MockDateProvider();
+        cache.setDateProvider(dateProvider);
     }
 
     @Test
@@ -59,7 +60,7 @@ public class SizeTest extends BaseTest {
     public void sizeWorksAfterRemovingOldElements() {
         cache.set(A_KEY, A_VALUE, ONE_SECOND);
         cache.set(ANOTHER_KEY, ANOTHER_VALUE, THREE_DAYS);
-        DateTimeUtils.setCurrentMillisFixed(twoHoursFromNow());
+        dateProvider.setFixed(twoHoursFromNow());
 
         cache.removeTooOldValues();
 
