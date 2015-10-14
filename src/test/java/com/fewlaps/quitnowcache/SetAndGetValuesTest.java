@@ -1,6 +1,5 @@
 package com.fewlaps.quitnowcache;
 
-import org.joda.time.DateTimeUtils;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -9,11 +8,13 @@ import static org.junit.Assert.*;
 public class SetAndGetValuesTest extends BaseTest {
 
     QNCache cache;
+    MockDateProvider dateProvider;
 
     @Before
     public void init() {
-        DateTimeUtils.setCurrentMillisSystem();
         cache = new QNCacheBuilder().createQNCache();
+        dateProvider = new MockDateProvider();
+        cache.setDateProvider(dateProvider);
     }
 
     @Test
@@ -34,7 +35,7 @@ public class SetAndGetValuesTest extends BaseTest {
     public void savingSomethingWithoudSpecifyingTheKeepaliveValueShouldReturnTheSameAfterThreeDays() {
         cache.set(A_KEY, A_VALUE);
 
-        DateTimeUtils.setCurrentMillisFixed(threeDaysFromNow());
+        dateProvider.setFixed(threeDaysFromNow());
 
         assertEquals(A_VALUE, cache.get(A_KEY));
     }
@@ -43,7 +44,7 @@ public class SetAndGetValuesTest extends BaseTest {
     public void savingSomethingForeverShouldReturnTheSameAfterThreeDays() {
         cache.set(A_KEY, A_VALUE, FOREVER);
 
-        DateTimeUtils.setCurrentMillisFixed(threeDaysFromNow());
+        dateProvider.setFixed(threeDaysFromNow());
 
         assertEquals(A_VALUE, cache.get(A_KEY));
     }
@@ -52,7 +53,7 @@ public class SetAndGetValuesTest extends BaseTest {
     public void savingAValueForTwoHoursShouldReturnNullAfterThreeDays() {
         cache.set(A_KEY, A_VALUE, TWO_HOURS);
 
-        DateTimeUtils.setCurrentMillisFixed(threeDaysFromNow());
+        dateProvider.setFixed(threeDaysFromNow());
 
         assertNull(cache.get(A_KEY));
     }
@@ -82,7 +83,7 @@ public class SetAndGetValuesTest extends BaseTest {
         cache.set(A_KEY, A_VALUE, ONE_SECOND);
         cache.set(ANOTHER_KEY, ANOTHER_VALUE, THREE_DAYS);
 
-        DateTimeUtils.setCurrentMillisFixed(twoHoursFromNow());
+        dateProvider.setFixed(twoHoursFromNow());
 
         assertNull(cache.getAndRemoveIfDead(A_KEY));
         assertEquals(1, cache.size());
@@ -94,7 +95,7 @@ public class SetAndGetValuesTest extends BaseTest {
         cache.set(A_KEY, A_VALUE, ONE_SECOND);
         cache.set(ANOTHER_KEY, ANOTHER_VALUE, THREE_DAYS);
 
-        DateTimeUtils.setCurrentMillisFixed(twoHoursFromNow());
+        dateProvider.setFixed(twoHoursFromNow());
 
         assertEquals(ANOTHER_VALUE, cache.getAndRemoveIfDead(ANOTHER_KEY));
         assertEquals(1, cache.size());
@@ -136,7 +137,7 @@ public class SetAndGetValuesTest extends BaseTest {
         cache.set(A_KEY, A_VALUE, THREE_DAYS);
         cache.set(A_KEY, ANOTHER_VALUE, ONE_SECOND);
 
-        DateTimeUtils.setCurrentMillisFixed(twoHoursFromNow());
+        dateProvider.setFixed(twoHoursFromNow());
 
         assertNull(cache.get(A_KEY));
     }

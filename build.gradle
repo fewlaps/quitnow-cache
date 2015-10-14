@@ -40,8 +40,6 @@ publish {
 }
 
 dependencies {
-    compile 'joda-time:joda-time:2.3'
-
     testCompile 'org.mockito:mockito-all:1.8.4'
 }
 
