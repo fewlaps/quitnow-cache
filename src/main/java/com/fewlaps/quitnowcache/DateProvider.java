@@ -1,6 +1,6 @@
 package com.fewlaps.quitnowcache;
 
-public interface DateProvider {
+interface DateProvider {
 
     long now();
 
