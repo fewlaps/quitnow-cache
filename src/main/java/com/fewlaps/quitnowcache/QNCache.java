@@ -1,7 +1,5 @@
 package com.fewlaps.quitnowcache;
 
-import org.joda.time.DateTime;
-
 import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -13,6 +11,7 @@ public class QNCache {
 
     private boolean caseSensitiveKeys = true;
     private Integer autoReleaseInSeconds = null;
+    private DateProvider dateProvider = DateProvider.SYSTEM;
 
     public QNCache(boolean caseSensitiveKeys, Integer autoReleaseInSeconds) {
         this.caseSensitiveKeys = caseSensitiveKeys;
@@ -47,7 +46,11 @@ public class QNCache {
     }
 
     private long now() {
-        return new DateTime().toDate().getTime();
+        return dateProvider.now();
+    }
+
+    protected void setDateProvider(DateProvider dateProvider) {
+        this.dateProvider = dateProvider;
     }
 
     private ConcurrentHashMap<String, QNCacheBean> cache;

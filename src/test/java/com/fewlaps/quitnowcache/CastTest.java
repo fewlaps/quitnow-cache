@@ -1,8 +1,7 @@
 package com.fewlaps.quitnowcache;
 
-import com.fewlaps.quitnowcache.beam.ObjectTestOne;
-import com.fewlaps.quitnowcache.beam.ObjectTestTwo;
-import org.joda.time.DateTimeUtils;
+import com.fewlaps.quitnowcache.bean.ObjectTestOne;
+import com.fewlaps.quitnowcache.bean.ObjectTestTwo;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,7 +14,6 @@ public class CastTest extends BaseTest {
 
     @Before
     public void init() {
-        DateTimeUtils.setCurrentMillisSystem();
         cache = new QNCacheBuilder().createQNCache();
     }
 
