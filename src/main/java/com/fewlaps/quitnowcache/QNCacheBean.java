@@ -5,8 +5,6 @@ package com.fewlaps.quitnowcache;
  */
 class QNCacheBean {
 
-    public static final int FOREVER_KEEPALIVE = 0;
-
     private long creationDate;
     private long keepAliveInMillis;
     private Object value;
@@ -18,7 +16,7 @@ class QNCacheBean {
     }
 
     public boolean isAlive(long now) {
-        if (FOREVER_KEEPALIVE == keepAliveInMillis) {
+        if (QNCache.KEEPALIVE_FOREVER == keepAliveInMillis) {
             return true;
         } else {
             return creationDate + keepAliveInMillis > now;

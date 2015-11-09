@@ -9,14 +9,20 @@ import java.util.concurrent.TimeUnit;
 
 public class QNCache {
 
+    public static final long KEEPALIVE_FOREVER = 0;
+
     private boolean caseSensitiveKeys = true;
     private Integer autoReleaseInSeconds = null;
+    private Long defaultKeepaliveInMillis = null;
     private DateProvider dateProvider = DateProvider.SYSTEM;
 
-    public QNCache(boolean caseSensitiveKeys, Integer autoReleaseInSeconds) {
+    public QNCache(boolean caseSensitiveKeys, Integer autoReleaseInSeconds, Long defaultKeepaliveInMillis) {
         this.caseSensitiveKeys = caseSensitiveKeys;
-        if (autoReleaseInSeconds != null && autoReleaseInSeconds > 0) { //Moronproof! :)
+        if (autoReleaseInSeconds != null && autoReleaseInSeconds > 0) {
             this.autoReleaseInSeconds = autoReleaseInSeconds;
+        }
+        if (defaultKeepaliveInMillis != null && defaultKeepaliveInMillis > 0) {
+            this.defaultKeepaliveInMillis = defaultKeepaliveInMillis;
         }
 
         cache = new ConcurrentHashMap();
@@ -45,6 +51,10 @@ public class QNCache {
         return autoReleaseInSeconds;
     }
 
+    Long getDefaultKeepaliveInMillis() {
+        return defaultKeepaliveInMillis;
+    }
+
     private long now() {
         return dateProvider.now();
     }
@@ -56,7 +66,11 @@ public class QNCache {
     private ConcurrentHashMap<String, QNCacheBean> cache;
 
     public void set(String key, Object value) {
-        set(key, value, 0); // Keep it forever
+        if (defaultKeepaliveInMillis != null) {
+            set(key, value, defaultKeepaliveInMillis);
+        } else {
+            set(key, value, KEEPALIVE_FOREVER);
+        }
     }
 
     public void set(String key, Object value, long keepAliveInMillis) {

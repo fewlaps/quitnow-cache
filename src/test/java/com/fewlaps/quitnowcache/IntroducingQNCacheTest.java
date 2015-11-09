@@ -7,10 +7,6 @@ import java.util.ArrayList;
 
 public class IntroducingQNCacheTest {
 
-    @Before
-    public void init() {
-    }
-
     @Test
     public void theCodeOfTheReadmeWorks() {
         //##The sample
