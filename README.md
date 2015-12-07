@@ -67,7 +67,7 @@ QNCache cache = new QNCacheBuilder().createQNCache(); //the default keepalive: r
 
 #Download
 
-* Get <a href="https://github.com/Fewlaps/quitnow-cache/releases/download/v1.4/quitnow-cache-1.4.jar">the last .jar</a> 
+* Get <a href="https://github.com/Fewlaps/quitnow-cache/releases/download/v1.4/quitnow-cache-1.4.jar">the latest .jar</a> 
 
 * Grab via Gradle:
 ```groovy
