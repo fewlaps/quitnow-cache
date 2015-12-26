@@ -1,17 +1,17 @@
 package com.fewlaps.quitnowcache;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
 
 public class IntroducingQNCacheTest {
 
+    @SuppressWarnings("UnusedAssignment")
     @Test
     public void theCodeOfTheReadmeWorks() {
         //##The sample
 
-        QNCache cache = new QNCacheBuilder().createQNCache();
+        QNCache<Object> cache = new QNCacheBuilder().createQNCache();
 
         cache.set("key", "value", 60 * 1000); // It can store things for a minute,
         cache.set("key", "value", 60 * 60 * 1000); // for an hour,
@@ -24,7 +24,7 @@ public class IntroducingQNCacheTest {
         cache.get("unExistingKey"); // If something doesn't exists, it returns null
         cache.get("tooOldKey"); // The same if a key is too old
 
-        cache.set("AnInteger", new Integer(42)); // You can save all kind of Objects...
+        cache.set("AnInteger", 42); // You can save all kind of Objects...
         cache.set("ACollection", new ArrayList()); // ...whatever you want
 
         cache.removeAll(); // You can also clean it,

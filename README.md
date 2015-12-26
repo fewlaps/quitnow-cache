@@ -14,7 +14,7 @@ The sample
 ----------
 
 ```java
-QNCache cache = new QNCacheBuilder().createQNCache();
+QNCache<String> cache = new QNCacheBuilder().createQNCache();
 
 cache.set("key", "value", 60 * 1000); // It can store things for a minute,
 cache.set("key", "value", 60 * 60 * 1000); // for an hour,
@@ -27,8 +27,10 @@ cache.remove("key"); // and remove it if you want.
 cache.get("unExistingKey"); // If something doesn't exists, it returns null
 cache.get("tooOldKey"); // The same if a key is too old
 
-cache.set("AnInteger", new Integer(42)); // You can save all kind of Objects...
-cache.set("ACollection", new ArrayList()); // ...whatever you want
+cache.set("AnInteger", new Integer(42)); // It is typesafe. This is a compile error
+
+QNCache<Object> objectCache = new QNCacheBuilder().createQNCache();
+objectCache.set("ACollection", new ArrayList()); // But you can still use it a multipurpose one
 
 cache.removeAll(); // You can also clean it,
 cache.size(); // and ask it how many elements it has
@@ -39,10 +41,10 @@ Let's talk about the memory
 By default, the cache stores a reference to all stored instances, doesn't matter if they're alive or they are too old. If you plan to store huge datasets, you can create it with an auto releaser. Then the cache will remove the old elements every 60 seconds, for example.
 
 ```java
-QNCache cache = new QNCacheBuilder().setAutoReleaseInSeconds(1).createQNCache(); //frees the memory every second
-QNCache cache = new QNCacheBuilder().setAutoReleaseInSeconds(60).createQNCache(); //frees the memory every minute
-QNCache cache = new QNCacheBuilder().setAutoReleaseInSeconds(60*60).createQNCache(); //frees the memory every hour
-QNCache cache = new QNCacheBuilder().createQNCache(); //never frees the memory
+QNCache<Object> cache = new QNCacheBuilder().setAutoReleaseInSeconds(1).createQNCache(); //frees the memory every second
+QNCache<Object> cache = new QNCacheBuilder().setAutoReleaseInSeconds(60).createQNCache(); //frees the memory every minute
+QNCache<Object> cache = new QNCacheBuilder().setAutoReleaseInSeconds(60*60).createQNCache(); //frees the memory every hour
+QNCache<Object> cache = new QNCacheBuilder().createQNCache(); //never frees the memory
 ```
 
 Are the keys case sensitive?
@@ -50,9 +52,9 @@ Are the keys case sensitive?
 By default, yes. But you can also specify it at building time.
 
 ```java
-QNCache cache = new QNCacheBuilder().setCaseSensitiveKeys(true).createQNCache(); //"key" and "KEY" will be different items
-QNCache cache = new QNCacheBuilder().setCaseSensitiveKeys(false).createQNCache(); //"key" and "KEY" will be the same
-QNCache cache = new QNCacheBuilder().createQNCache(); //"key" and "KEY" will be different items
+QNCache<Object> cache = new QNCacheBuilder().setCaseSensitiveKeys(true).createQNCache(); //"key" and "KEY" will be different items
+QNCache<Object> cache = new QNCacheBuilder().setCaseSensitiveKeys(false).createQNCache(); //"key" and "KEY" will be the same
+QNCache<Object> cache = new QNCacheBuilder().createQNCache(); //"key" and "KEY" will be different items
 ```
 
 #Download
