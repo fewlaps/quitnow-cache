@@ -27,11 +27,11 @@ cache.remove("key"); // and remove it if you want.
 cache.get("unExistingKey"); // If something doesn't exists, it returns null
 cache.get("tooOldKey"); // The same if a key is too old
 
-cache.set("AnInteger", new Integer(42)); // You can save all kind of Objects...
-cache.set("ACollection", new ArrayList()); // ...whatever you want
-
 cache.removeAll(); // You can also clean it,
 cache.size(); // and ask it how many elements it has
+
+QNCache<String> stringCache = new QNCacheBuilder().createQNCache(); //You can also make it typesafe
+stringCache.set("key", 42); //so this line does not compile :)
 ```
 
 Let's talk about the memory
@@ -41,7 +41,7 @@ By default, the cache stores a reference to all stored instances, doesn't matter
 ```java
 QNCache cache = new QNCacheBuilder().setAutoReleaseInSeconds(1).createQNCache(); //frees the memory every second
 QNCache cache = new QNCacheBuilder().setAutoReleaseInSeconds(60).createQNCache(); //frees the memory every minute
-QNCache cache = new QNCacheBuilder().setAutoReleaseInSeconds(60 * 60).createQNCache(); //frees the memory every hour
+QNCache cache = new QNCacheBuilder().setAutoReleaseInSeconds(60*60).createQNCache(); //frees the memory every hour
 QNCache cache = new QNCacheBuilder().createQNCache(); //never frees the memory
 ```
 

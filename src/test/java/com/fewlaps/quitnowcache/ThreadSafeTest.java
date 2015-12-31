@@ -1,6 +1,7 @@
 package com.fewlaps.quitnowcache;
 
 import com.fewlaps.quitnowcache.util.RandomGenerator;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -13,7 +14,7 @@ public class ThreadSafeTest extends BaseTest {
 
     static final int ITERATIONS = 10000;
 
-    QNCache cache;
+    QNCache<String> cache;
 
     @Before
     public void init() {

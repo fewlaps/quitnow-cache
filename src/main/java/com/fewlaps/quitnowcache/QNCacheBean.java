@@ -3,13 +3,13 @@ package com.fewlaps.quitnowcache;
 /**
  * This class is not public 'cause we'll hide the implementation of the QNCache itself
  */
-class QNCacheBean {
+class QNCacheBean<T> {
 
     private long creationDate;
     private long keepAliveInMillis;
-    private Object value;
+    private T value;
 
-    public QNCacheBean(Object value, long creationDate, long keepAliveInMillis) {
+    public QNCacheBean(T value, long creationDate, long keepAliveInMillis) {
         this.creationDate = creationDate;
         this.keepAliveInMillis = keepAliveInMillis;
         this.value = value;
@@ -23,7 +23,7 @@ class QNCacheBean {
         }
     }
 
-    public Object getValue() {
+    public T getValue() {
         return value;
     }
 }
