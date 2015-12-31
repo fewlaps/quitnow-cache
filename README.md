@@ -14,7 +14,7 @@ The sample
 ----------
 
 ```java
-QNCache<String> cache = new QNCacheBuilder().createQNCache();
+QNCache cache = new QNCacheBuilder().createQNCache();
 
 cache.set("key", "value", 60 * 1000); // It can store things for a minute,
 cache.set("key", "value", 60 * 60 * 1000); // for an hour,
@@ -27,13 +27,11 @@ cache.remove("key"); // and remove it if you want.
 cache.get("unExistingKey"); // If something doesn't exists, it returns null
 cache.get("tooOldKey"); // The same if a key is too old
 
-cache.set("AnInteger", new Integer(42)); // It is typesafe. This is a compile error
-
-QNCache<Object> objectCache = new QNCacheBuilder().createQNCache();
-objectCache.set("ACollection", new ArrayList()); // But you can still use it a multipurpose one
-
 cache.removeAll(); // You can also clean it,
 cache.size(); // and ask it how many elements it has
+
+QNCache<String> stringCache = new QNCacheBuilder().createQNCache(); //You can also make it typesafe
+stringCache.set("key", 42); //so this line does not compile :)
 ```
 
 Let's talk about the memory
