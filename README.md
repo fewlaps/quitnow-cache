@@ -85,7 +85,7 @@ compile 'com.fewlaps.quitnowcache:quitnow-cache:1.5.0'
 <dependency>
     <groupId>com.fewlaps.quitnowcache</groupId>
     <artifactId>quitnow-cache</artifactId>
-    <version>1.4</version>
+    <version>1.5.0</version>
 </dependency>
 ```
 
