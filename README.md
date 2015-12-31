@@ -41,10 +41,10 @@ Let's talk about the memory
 By default, the cache stores a reference to all stored instances, doesn't matter if they're alive or they are too old. If you plan to store huge datasets, you can create it with an auto releaser. Then the cache will remove the old elements every 60 seconds, for example.
 
 ```java
-QNCache<Object> cache = new QNCacheBuilder().setAutoReleaseInSeconds(1).createQNCache(); //frees the memory every second
-QNCache<Object> cache = new QNCacheBuilder().setAutoReleaseInSeconds(60).createQNCache(); //frees the memory every minute
-QNCache<Object> cache = new QNCacheBuilder().setAutoReleaseInSeconds(60*60).createQNCache(); //frees the memory every hour
-QNCache<Object> cache = new QNCacheBuilder().createQNCache(); //never frees the memory
+QNCache cache = new QNCacheBuilder().setAutoReleaseInSeconds(1).createQNCache(); //frees the memory every second
+QNCache cache = new QNCacheBuilder().setAutoReleaseInSeconds(60).createQNCache(); //frees the memory every minute
+QNCache cache = new QNCacheBuilder().setAutoReleaseInSeconds(60*60).createQNCache(); //frees the memory every hour
+QNCache cache = new QNCacheBuilder().createQNCache(); //never frees the memory
 ```
 
 Are the keys case sensitive?
@@ -52,20 +52,30 @@ Are the keys case sensitive?
 By default, yes. But you can also specify it at building time.
 
 ```java
-QNCache<Object> cache = new QNCacheBuilder().setCaseSensitiveKeys(true).createQNCache(); //"key" and "KEY" will be different items
-QNCache<Object> cache = new QNCacheBuilder().setCaseSensitiveKeys(false).createQNCache(); //"key" and "KEY" will be the same
-QNCache<Object> cache = new QNCacheBuilder().createQNCache(); //"key" and "KEY" will be different items
+QNCache cache = new QNCacheBuilder().setCaseSensitiveKeys(true).createQNCache(); //"key" and "KEY" will be different items
+QNCache cache = new QNCacheBuilder().setCaseSensitiveKeys(false).createQNCache(); //"key" and "KEY" will be the same
+QNCache cache = new QNCacheBuilder().createQNCache(); //"key" and "KEY" will be different items
+```
+
+It's possible to change the default keepalive?
+---------------------------
+Of course! But, again, you have to specify it at building time.
+
+```java
+QNCache cache = new QNCacheBuilder().setDefaultKeepaliveInMillis(1000).createQNCache(); //a keepalive of one second
+QNCache cache = new QNCacheBuilder().setDefaultKeepaliveInMillis(1000 * 60).createQNCache(); //a keepalive of one minute
+QNCache cache = new QNCacheBuilder().createQNCache(); //the default keepalive: remember it forever!
 ```
 
 #Download
 
-* Get <a href="https://github.com/Fewlaps/quitnow-cache/releases/download/v1.2/quitnow-cache-1.2.jar">the last .jar</a> 
+* Get <a href="https://github.com/Fewlaps/quitnow-cache/releases/download/v1.4/quitnow-cache-1.4.jar">the latest .jar</a> 
 
 * Grab via Gradle:
 ```groovy
 repositories { jcenter() }
     
-compile 'com.fewlaps.quitnowcache:quitnow-cache:1.2'
+compile 'com.fewlaps.quitnowcache:quitnow-cache:1.4'
 ```
 * Grab via Maven:
 ```xml
@@ -77,7 +87,7 @@ compile 'com.fewlaps.quitnowcache:quitnow-cache:1.2'
 <dependency>
     <groupId>com.fewlaps.quitnowcache</groupId>
     <artifactId>quitnow-cache</artifactId>
-    <version>1.2</version>
+    <version>1.4</version>
 </dependency>
 ```
 
