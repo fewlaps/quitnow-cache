@@ -20,7 +20,7 @@ public class QNCacheBuilder {
         return this;
     }
 
-    public QNCache createQNCache() {
-        return new QNCache(caseSensitiveKeys, autoReleaseInSeconds, defaultKeepaliveInMillis);
+    public <T> QNCache<T> createQNCache() {
+        return new QNCache<T>(caseSensitiveKeys, autoReleaseInSeconds, defaultKeepaliveInMillis);
     }
 }

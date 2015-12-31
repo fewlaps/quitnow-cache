@@ -7,7 +7,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-public class QNCache {
+public class QNCache<T> {
 
     public static final long KEEPALIVE_FOREVER = 0;
 
@@ -25,7 +25,7 @@ public class QNCache {
             this.defaultKeepaliveInMillis = defaultKeepaliveInMillis;
         }
 
-        cache = new ConcurrentHashMap();
+        cache = new ConcurrentHashMap<String, QNCacheBean<T>>();
 
         startAutoReleaseServiceIfNeeded();
     }
@@ -63,9 +63,9 @@ public class QNCache {
         this.dateProvider = dateProvider;
     }
 
-    private ConcurrentHashMap<String, QNCacheBean> cache;
+    private ConcurrentHashMap<String, QNCacheBean<T>> cache;
 
-    public void set(String key, Object value) {
+    public void set(String key, T value) {
         if (defaultKeepaliveInMillis != null) {
             set(key, value, defaultKeepaliveInMillis);
         } else {
@@ -73,25 +73,25 @@ public class QNCache {
         }
     }
 
-    public void set(String key, Object value, long keepAliveInMillis) {
+    public void set(String key, T value, long keepAliveInMillis) {
         key = getEffectiveKey(key);
 
         if (keepAliveInMillis >= 0) {
-            cache.put(key, new QNCacheBean(value, now(), keepAliveInMillis));
+            cache.put(key, new QNCacheBean<T>(value, now(), keepAliveInMillis));
         }
     }
 
     /**
      * Gets an element from the cache.
      */
-    public <T> T get(String key) {
+    public T get(String key) {
         key = getEffectiveKey(key);
 
-        QNCacheBean retrievedValue = cache.get(key);
+        QNCacheBean<T> retrievedValue = cache.get(key);
         if (retrievedValue == null || !retrievedValue.isAlive(now())) {
             return null;
         } else {
-            return (T) retrievedValue.getValue();
+            return retrievedValue.getValue();
         }
     }
 
@@ -99,10 +99,10 @@ public class QNCache {
      * Gets an element from the cache. If the element exists but it's dead,
      * it will be removed of the cache, to free memory
      */
-    Object getAndRemoveIfDead(String key) {
+    T getAndRemoveIfDead(String key) {
         key = getEffectiveKey(key);
 
-        QNCacheBean retrievedValue = cache.get(key);
+        QNCacheBean<T> retrievedValue = cache.get(key);
         if (retrievedValue == null) {
             return null;
         } else if (retrievedValue.isAlive(now())) {
@@ -130,10 +130,11 @@ public class QNCache {
      * Removes the dead elements of the cache, to free memory
      */
     void removeTooOldValues() {
-        Iterator it = cache.entrySet().iterator();
+        Iterator<Map.Entry<String, QNCacheBean<T>>> it = cache.entrySet().iterator();
+
         while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry) it.next();
-            QNCacheBean bean = (QNCacheBean) pair.getValue();
+            Map.Entry<String, QNCacheBean<T>> entry = it.next();
+            QNCacheBean<T> bean = entry.getValue();
             if (!bean.isAlive(now())) {
                 it.remove();
             }
@@ -152,11 +153,9 @@ public class QNCache {
      */
     int sizeCountingOnlyAliveElements() {
         int size = 0;
-        Iterator it = cache.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry) it.next();
-            QNCacheBean bean = (QNCacheBean) pair.getValue();
-            if (bean.isAlive(now())) {
+
+        for(QNCacheBean<T> cacheValue: cache.values()) {
+            if (cacheValue.isAlive(now())) {
                 size++;
             }
         }
