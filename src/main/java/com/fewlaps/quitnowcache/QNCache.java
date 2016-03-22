@@ -12,9 +12,10 @@ public class QNCache<T> {
     public static final long KEEPALIVE_FOREVER = 0;
 
     private boolean caseSensitiveKeys = true;
-    private Integer autoReleaseInSeconds = null;
-    private Long defaultKeepaliveInMillis = null;
+    private Integer autoReleaseInSeconds;
+    private Long defaultKeepaliveInMillis;
     private DateProvider dateProvider = DateProvider.SYSTEM;
+    private ConcurrentHashMap<String, QNCacheBean<T>> cache;
 
     public QNCache(boolean caseSensitiveKeys, Integer autoReleaseInSeconds, Long defaultKeepaliveInMillis) {
         this.caseSensitiveKeys = caseSensitiveKeys;
@@ -62,8 +63,6 @@ public class QNCache<T> {
     protected void setDateProvider(DateProvider dateProvider) {
         this.dateProvider = dateProvider;
     }
-
-    private ConcurrentHashMap<String, QNCacheBean<T>> cache;
 
     public void set(String key, T value) {
         if (defaultKeepaliveInMillis != null) {

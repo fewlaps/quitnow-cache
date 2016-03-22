@@ -2,7 +2,7 @@ package com.fewlaps.quitnowcache;
 
 public class QNCacheBuilder {
     private boolean caseSensitiveKeys = true;
-    private Integer autoReleaseInSeconds = null;
+    private Integer autoReleaseInSeconds;
     private long defaultKeepaliveInMillis = QNCache.KEEPALIVE_FOREVER;
 
     public QNCacheBuilder setCaseSensitiveKeys(boolean caseSensitiveKeys) {
