@@ -6,9 +6,9 @@
 # [QuitNow!](http://quitnowapp.com)'s cache
 A memcached-like Java cache, focused on portability, great for Android.
 
-Before this library, QuitNow! and lots of apps we've seen are caching things until the system kills the app. That's not cool. In the other hand, developing a cache for that little improvement is not trivial. So, we decided to return the work to the open source community by writing this really simple cache, allowing developers to keep information only for a limited time.
+Before this library, caching data for a limited time was a hard task to do. The developer had to save the last time the data was stored, and then, check it everytime the data was read. So, we decided to return the work to the open source community by writing this really simple cache, allowing developers to keep information for a limted time.
 
-And we've done it using TDD, so it's totally tested. [Check the tests!](https://github.com/Fewlaps/quitnow-cache/tree/master/src/test/java/com/fewlaps/quitnowcache) :·)
+We've done it using TDD, so it's totally tested. [Check the tests!](https://github.com/Fewlaps/quitnow-cache/tree/master/src/test/java/com/fewlaps/quitnowcache) :·)
 
 The sample
 ----------
