@@ -7,6 +7,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Supplier;
 
 public class QNCache<T> {
 
@@ -95,6 +96,36 @@ public class QNCache<T> {
         return Optional.ofNullable(maybeGet(key));
     }
 
+    /**
+     * Gets an element from the cache.
+     * Uses the supplier if not present and caches the value with the default keep alive.
+     */
+    public T getOrElseCache(String key, Supplier<? extends T> supplier) {
+        Optional<T> optionalValue = get(key);
+        if (optionalValue.isPresent()) {
+            return optionalValue.get();
+        } else {
+            T newValue = supplier.get();
+            this.set(key, newValue);
+            return newValue;
+        }
+    }
+
+    /**
+     * Gets an element from the cache.
+     * Uses the supplier if not present and caches the value with the specified keep alive.
+     */
+    public T getOrElseCache(String key, Supplier<? extends T> supplier, long keepAliveInMillis) {
+        Optional<T> optionalValue = get(key);
+        if (optionalValue.isPresent()) {
+            return optionalValue.get();
+        } else {
+            T newValue = supplier.get();
+            this.set(key, newValue, keepAliveInMillis);
+            return newValue;
+        }
+    }
+
     T maybeGetAndRemoveIfDead(String key) {
         key = getEffectiveKey(key);
 
@@ -156,14 +187,9 @@ public class QNCache<T> {
      * Counts how much alive elements are living in the cache
      */
     int sizeCountingOnlyAliveElements() {
-        int size = 0;
-
-        for(QNCacheBean<T> cacheValue: cache.values()) {
-            if (cacheValue.isAlive(now())) {
-                size++;
-            }
-        }
-        return size;
+        return ((int) cache.values().stream()
+          .filter(value -> value.isAlive(now()))
+          .count());
     }
 
     /**
