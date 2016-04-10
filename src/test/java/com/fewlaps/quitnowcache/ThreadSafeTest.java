@@ -60,7 +60,7 @@ public class ThreadSafeTest extends BaseTest {
             public void run() {
                 while (!writerFinished1.get() || !writerFinished2.get()) {
                     try {
-                        cache.get(RandomGenerator.generateRandomString());
+                        cache.maybeGet(RandomGenerator.generateRandomString());
                     } catch (Exception e) {
                         errors.set(errors.get() + 1);
                     }
@@ -131,7 +131,7 @@ public class ThreadSafeTest extends BaseTest {
             public void run() {
                 while (!writerFinished1.get() || !writerFinished2.get()) {
                     try {
-                        cache.getOptional(A_KEY);
+                        cache.get(A_KEY);
                     } catch (Exception e) {
                         errors.set(errors.get() + 1);
                     }

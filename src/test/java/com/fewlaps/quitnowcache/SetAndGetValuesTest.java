@@ -24,14 +24,14 @@ public class SetAndGetValuesTest extends BaseTest {
     public void savingSomethingForOneSecondsShouldReturnTheSameImmediatelly() {
         cache.set(A_KEY, A_VALUE, ONE_SECOND);
 
-        assertEquals(A_VALUE, cache.getOptional(A_KEY).get());
+        assertEquals(A_VALUE, cache.get(A_KEY).get());
     }
 
     @Test
     public void savingSomethingForeverShouldReturnTheSameImmediatelly() {
         cache.set(A_KEY, A_VALUE, FOREVER);
 
-        assertEquals(A_VALUE, cache.getOptional(A_KEY).get());
+        assertEquals(A_VALUE, cache.get(A_KEY).get());
     }
 
     @Test
@@ -40,7 +40,7 @@ public class SetAndGetValuesTest extends BaseTest {
 
         dateProvider.setFixed(threeDaysFromNow());
 
-        assertEquals(A_VALUE, cache.getOptional(A_KEY).get());
+        assertEquals(A_VALUE, cache.get(A_KEY).get());
     }
 
     @Test
@@ -49,7 +49,7 @@ public class SetAndGetValuesTest extends BaseTest {
 
         dateProvider.setFixed(threeDaysFromNow());
 
-        assertEquals(A_VALUE, cache.getOptional(A_KEY).get());
+        assertEquals(A_VALUE, cache.get(A_KEY).get());
     }
 
     @Test
@@ -58,7 +58,7 @@ public class SetAndGetValuesTest extends BaseTest {
 
         dateProvider.setFixed(threeDaysFromNow());
 
-        assertFalse(cache.getOptional(A_KEY).isPresent());
+        assertFalse(cache.get(A_KEY).isPresent());
     }
 
     @Test
@@ -66,7 +66,7 @@ public class SetAndGetValuesTest extends BaseTest {
         cache.set(A_KEY, A_VALUE, -1);
         cache.set(ANOTHER_KEY, ANOTHER_VALUE, ONE_SECOND);
 
-        assertFalse(cache.getOptional(A_KEY).isPresent());
+        assertFalse(cache.get(A_KEY).isPresent());
         assertEquals(1, cache.size());
         assertEquals(1, cache.sizeCountingDeadAndAliveElements());
     }
@@ -76,7 +76,7 @@ public class SetAndGetValuesTest extends BaseTest {
         cache.set(A_KEY, A_VALUE, -1);
         cache.set(ANOTHER_KEY, ANOTHER_VALUE, THREE_DAYS);
 
-        assertFalse(cache.getOptionalAndRemoveIfDead(A_KEY).isPresent());
+        assertFalse(cache.getAndRemoveIfDead(A_KEY).isPresent());
         assertEquals(1, cache.size());
         assertEquals(1, cache.sizeCountingDeadAndAliveElements());
     }
@@ -88,7 +88,7 @@ public class SetAndGetValuesTest extends BaseTest {
 
         dateProvider.setFixed(twoHoursFromNow());
 
-        assertFalse(cache.getOptionalAndRemoveIfDead(A_KEY).isPresent());
+        assertFalse(cache.getAndRemoveIfDead(A_KEY).isPresent());
         assertEquals(1, cache.size());
         assertEquals(1, cache.sizeCountingDeadAndAliveElements());
     }
@@ -100,7 +100,7 @@ public class SetAndGetValuesTest extends BaseTest {
 
         dateProvider.setFixed(twoHoursFromNow());
 
-        assertEquals(ANOTHER_VALUE, cache.getOptionalAndRemoveIfDead(ANOTHER_KEY).get());
+        assertEquals(ANOTHER_VALUE, cache.getAndRemoveIfDead(ANOTHER_KEY).get());
         assertEquals(1, cache.size());
         assertEquals(2, cache.sizeCountingDeadAndAliveElements());
     }
@@ -112,8 +112,8 @@ public class SetAndGetValuesTest extends BaseTest {
 
         cache.remove(A_KEY);
 
-        assertFalse(cache.getOptional(A_KEY).isPresent());
-        assertEquals(ANOTHER_VALUE, cache.getOptional(ANOTHER_KEY).get());
+        assertFalse(cache.get(A_KEY).isPresent());
+        assertEquals(ANOTHER_VALUE, cache.get(ANOTHER_KEY).get());
     }
 
     @Test
@@ -123,8 +123,8 @@ public class SetAndGetValuesTest extends BaseTest {
 
         cache.removeAll();
 
-        assertFalse(cache.getOptional(A_KEY).isPresent());
-        assertFalse(cache.getOptional(ANOTHER_KEY).isPresent());
+        assertFalse(cache.get(A_KEY).isPresent());
+        assertFalse(cache.get(ANOTHER_KEY).isPresent());
     }
 
     @Test
@@ -132,7 +132,7 @@ public class SetAndGetValuesTest extends BaseTest {
         cache.set(A_KEY, A_VALUE, TWO_HOURS);
         cache.set(A_KEY, ANOTHER_VALUE, THREE_DAYS);
 
-        assertEquals(ANOTHER_VALUE, cache.getOptional(A_KEY).get());
+        assertEquals(ANOTHER_VALUE, cache.get(A_KEY).get());
     }
 
     @Test
@@ -142,7 +142,7 @@ public class SetAndGetValuesTest extends BaseTest {
 
         dateProvider.setFixed(twoHoursFromNow());
 
-        assertFalse(cache.getOptional(A_KEY).isPresent());
+        assertFalse(cache.get(A_KEY).isPresent());
     }
 
     @Test
@@ -150,7 +150,7 @@ public class SetAndGetValuesTest extends BaseTest {
         cache.set(A_KEY, A_VALUE, THREE_DAYS);
         cache.set(A_KEY, null, ONE_SECOND);
 
-        assertFalse(cache.getOptional(A_KEY).isPresent());
+        assertFalse(cache.get(A_KEY).isPresent());
     }
 
     @Test

@@ -12,7 +12,7 @@ public class CaseSensitiveKeyTest extends BaseTest {
         QNCache<String> cache = new QNCacheBuilder().setCaseSensitiveKeys(false).createQNCache();
         cache.set(A_KEY.toLowerCase(), A_VALUE, FOREVER);
 
-        assertEquals(A_VALUE, cache.getOptional(A_KEY.toUpperCase()).get());
+        assertEquals(A_VALUE, cache.get(A_KEY.toUpperCase()).get());
     }
 
     @Test
@@ -20,7 +20,7 @@ public class CaseSensitiveKeyTest extends BaseTest {
         QNCache<String> cache = new QNCacheBuilder().setCaseSensitiveKeys(true).createQNCache();
         cache.set(A_KEY.toLowerCase(), A_VALUE, FOREVER);
 
-        assertFalse(cache.getOptional(A_KEY.toUpperCase()).isPresent());
+        assertFalse(cache.get(A_KEY.toUpperCase()).isPresent());
     }
 
     @Test
@@ -28,6 +28,6 @@ public class CaseSensitiveKeyTest extends BaseTest {
         QNCache<String> cache = new QNCacheBuilder().createQNCache();
         cache.set(A_KEY.toLowerCase(), A_VALUE, FOREVER);
 
-        assertFalse(cache.getOptional(A_KEY.toUpperCase()).isPresent());
+        assertFalse(cache.get(A_KEY.toUpperCase()).isPresent());
     }
 }

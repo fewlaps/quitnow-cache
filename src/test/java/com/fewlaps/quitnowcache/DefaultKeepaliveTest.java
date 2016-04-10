@@ -18,7 +18,7 @@ public class DefaultKeepaliveTest extends BaseTest {
 
         dateProvider.setFixed(threeDaysFromNow());
 
-        assertNotNull(cache.getOptional(A_KEY).get());
+        assertNotNull(cache.get(A_KEY).get());
     }
 
     @Test
@@ -29,7 +29,7 @@ public class DefaultKeepaliveTest extends BaseTest {
 
         cache.set(A_KEY, A_VALUE);
 
-        assertNotNull(cache.getOptional(A_KEY).get());
+        assertNotNull(cache.get(A_KEY).get());
     }
 
     @Test
@@ -42,7 +42,7 @@ public class DefaultKeepaliveTest extends BaseTest {
 
         dateProvider.setFixed(oneSecondFromNow());
 
-        assertFalse(cache.getOptional(A_KEY).isPresent());
+        assertFalse(cache.get(A_KEY).isPresent());
     }
 
     @Test
@@ -55,7 +55,7 @@ public class DefaultKeepaliveTest extends BaseTest {
 
         dateProvider.setFixed(twoHoursFromNow());
 
-        assertFalse(cache.getOptional(A_KEY).isPresent());
+        assertFalse(cache.get(A_KEY).isPresent());
     }
 
     @Test
@@ -68,6 +68,6 @@ public class DefaultKeepaliveTest extends BaseTest {
 
         dateProvider.setFixed(oneSecondFromNow());
 
-        assertNotNull(cache.getOptional(A_KEY).get());
+        assertNotNull(cache.get(A_KEY).get());
     }
 }
