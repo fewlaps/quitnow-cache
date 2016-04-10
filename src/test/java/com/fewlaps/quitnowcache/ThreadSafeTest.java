@@ -131,7 +131,7 @@ public class ThreadSafeTest extends BaseTest {
             public void run() {
                 while (!writerFinished1.get() || !writerFinished2.get()) {
                     try {
-                        cache.get(A_KEY);
+                        cache.getOptional(A_KEY);
                     } catch (Exception e) {
                         errors.set(errors.get() + 1);
                     }

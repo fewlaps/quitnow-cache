@@ -20,7 +20,7 @@ public class MassiveDataTest extends BaseTest {
             cache.set(String.valueOf(i), i, 0);
         }
         for (Integer i = 0; i < iterations; i++) {
-            assertEquals(i, cache.get(String.valueOf(i)));
+            assertEquals(i, cache.getOptional(String.valueOf(i)).get());
         }
     }
 }

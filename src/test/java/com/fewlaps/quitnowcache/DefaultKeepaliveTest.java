@@ -2,6 +2,7 @@ package com.fewlaps.quitnowcache;
 
 import org.junit.Test;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
@@ -17,7 +18,7 @@ public class DefaultKeepaliveTest extends BaseTest {
 
         dateProvider.setFixed(threeDaysFromNow());
 
-        assertNotNull(cache.get(A_KEY));
+        assertNotNull(cache.getOptional(A_KEY).get());
     }
 
     @Test
@@ -28,7 +29,7 @@ public class DefaultKeepaliveTest extends BaseTest {
 
         cache.set(A_KEY, A_VALUE);
 
-        assertNotNull(cache.get(A_KEY));
+        assertNotNull(cache.getOptional(A_KEY).get());
     }
 
     @Test
@@ -41,7 +42,7 @@ public class DefaultKeepaliveTest extends BaseTest {
 
         dateProvider.setFixed(oneSecondFromNow());
 
-        assertNull(cache.get(A_KEY));
+        assertFalse(cache.getOptional(A_KEY).isPresent());
     }
 
     @Test
@@ -54,7 +55,7 @@ public class DefaultKeepaliveTest extends BaseTest {
 
         dateProvider.setFixed(twoHoursFromNow());
 
-        assertNull(cache.get(A_KEY));
+        assertFalse(cache.getOptional(A_KEY).isPresent());
     }
 
     @Test
@@ -67,6 +68,6 @@ public class DefaultKeepaliveTest extends BaseTest {
 
         dateProvider.setFixed(oneSecondFromNow());
 
-        assertNotNull(cache.get(A_KEY));
+        assertNotNull(cache.getOptional(A_KEY).get());
     }
 }

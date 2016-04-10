@@ -50,8 +50,8 @@ public class SizeTest extends BaseTest {
 
         cache.removeAll();
 
-        assertNull(cache.get(A_KEY));
-        assertNull(cache.get(ANOTHER_KEY));
+        assertFalse(cache.getOptional(A_KEY).isPresent());
+        assertFalse(cache.getOptional(ANOTHER_KEY).isPresent());
 
         assertEquals(0, cache.size());
         assertEquals(0, cache.sizeCountingDeadAndAliveElements());
@@ -67,8 +67,8 @@ public class SizeTest extends BaseTest {
 
         cache.removeTooOldValues();
 
-        assertNull(cache.get(A_KEY));
-        assertEquals(ANOTHER_VALUE, cache.get(ANOTHER_KEY));
+        assertFalse(cache.getOptional(A_KEY).isPresent());
+        assertEquals(ANOTHER_VALUE, cache.getOptional(ANOTHER_KEY).get());
 
         assertEquals(1, cache.size());
         assertEquals(1, cache.sizeCountingDeadAndAliveElements());

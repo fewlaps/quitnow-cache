@@ -20,14 +20,14 @@ public class CastTest extends BaseTest {
     public void saveObjectAndReturnSameInstance() {
         cache.set(A_KEY, new ObjectTestOne());
 
-        assertThat(cache.get(A_KEY), instanceOf(ObjectTestOne.class));
+        assertThat(cache.getOptional(A_KEY).get(), instanceOf(ObjectTestOne.class));
     }
 
     @Test
     public void shouldCastObject() {
         cache.set(A_KEY, new ObjectTestOne());
 
-        ObjectTestOne objectTestOne = cache.get(A_KEY);
+        ObjectTestOne objectTestOne = cache.getOptional(A_KEY).get();
 
         assertThat(objectTestOne, instanceOf(ObjectTestOne.class));
     }

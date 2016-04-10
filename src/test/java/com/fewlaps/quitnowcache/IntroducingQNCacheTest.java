@@ -19,11 +19,11 @@ public class IntroducingQNCacheTest {
         cache.set("key", "value", 0); // or forever.
         cache.set("key", "value"); // And also for the short version of forever.
 
-        cache.get("key"); // It can get them again,
+        cache.getOptional("key").get(); // It can get them again,
         cache.remove("key"); // and remove it if you want.
 
-        cache.get("unExistingKey"); // If something doesn't exists, it returns null
-        cache.get("tooOldKey"); // The same if a key is too old
+        cache.getOptional("unExistingKey").isPresent(); // If something doesn't exists, it returns empty
+        cache.getOptional("tooOldKey").isPresent(); // The same if a key is too old
 
         cache.removeAll(); // You can also clean it,
         cache.size(); // and ask it how many elements it has
