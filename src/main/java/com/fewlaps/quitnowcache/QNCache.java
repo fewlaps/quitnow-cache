@@ -82,10 +82,7 @@ public class QNCache<T> {
         }
     }
 
-    /**
-     * Gets an element from the cache.
-     */
-    public T get(String key) {
+    T get(String key) {
         key = getEffectiveKey(key);
 
         QNCacheBean<T> retrievedValue = cache.get(key);
@@ -96,14 +93,13 @@ public class QNCache<T> {
         }
     }
 
+    /**
+     * Gets an element from the cache.
+     */
     public Optional<T> getOptional(String key) {
         return Optional.ofNullable(get(key));
     }
 
-    /**
-     * Gets an element from the cache. If the element exists but it's dead,
-     * it will be removed of the cache, to free memory
-     */
     T getAndRemoveIfDead(String key) {
         key = getEffectiveKey(key);
 
@@ -118,6 +114,10 @@ public class QNCache<T> {
         }
     }
 
+    /**
+     * Gets an element from the cache. If the element exists but it's dead,
+     * it will be removed of the cache, to free memory
+     */
     Optional<T> getOptionalAndRemoveIfDead(String key) {
         return Optional.ofNullable(getAndRemoveIfDead(key));
     }
