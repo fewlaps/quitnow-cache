@@ -2,6 +2,7 @@ package com.fewlaps.quitnowcache;
 
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -95,6 +96,10 @@ public class QNCache<T> {
         }
     }
 
+    public Optional<T> getOptional(String key) {
+        return Optional.ofNullable(get(key));
+    }
+
     /**
      * Gets an element from the cache. If the element exists but it's dead,
      * it will be removed of the cache, to free memory
@@ -111,6 +116,10 @@ public class QNCache<T> {
             cache.remove(key);
             return null;
         }
+    }
+
+    Optional<T> getOptionalAndRemoveIfDead(String key) {
+        return Optional.ofNullable(getAndRemoveIfDead(key));
     }
 
     public void remove(String key) {
