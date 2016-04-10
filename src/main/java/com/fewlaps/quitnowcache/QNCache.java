@@ -26,7 +26,7 @@ public class QNCache<T> {
             this.defaultKeepaliveInMillis = defaultKeepaliveInMillis;
         }
 
-        cache = new ConcurrentHashMap<String, QNCacheBean<T>>();
+        cache = new ConcurrentHashMap<>();
 
         startAutoReleaseServiceIfNeeded();
     }
@@ -35,12 +35,7 @@ public class QNCache<T> {
         if (autoReleaseInSeconds != null) {
             ScheduledExecutorService ses = Executors.newSingleThreadScheduledExecutor();
 
-            ses.scheduleAtFixedRate(new Runnable() {
-                @Override
-                public void run() {
-                    removeTooOldValues();
-                }
-            }, autoReleaseInSeconds, autoReleaseInSeconds, TimeUnit.SECONDS);
+            ses.scheduleAtFixedRate(this::removeTooOldValues, autoReleaseInSeconds, autoReleaseInSeconds, TimeUnit.SECONDS);
         }
     }
 
@@ -78,7 +73,7 @@ public class QNCache<T> {
         key = getEffectiveKey(key);
 
         if (keepAliveInMillis >= 0) {
-            cache.put(key, new QNCacheBean<T>(value, now(), keepAliveInMillis));
+            cache.put(key, new QNCacheBean<>(value, now(), keepAliveInMillis));
         }
     }
 
