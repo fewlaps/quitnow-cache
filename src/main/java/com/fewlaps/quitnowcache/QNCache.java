@@ -11,11 +11,11 @@ public class QNCache<T> {
 
     public static final long KEEPALIVE_FOREVER = 0;
 
+    private final ConcurrentHashMap<String, QNCacheBean<T>> cache;
     private boolean caseSensitiveKeys = true;
     private Integer autoReleaseInSeconds;
     private Long defaultKeepaliveInMillis;
     private DateProvider dateProvider = DateProvider.SYSTEM;
-    private ConcurrentHashMap<String, QNCacheBean<T>> cache;
 
     public QNCache(boolean caseSensitiveKeys, Integer autoReleaseInSeconds, Long defaultKeepaliveInMillis) {
         this.caseSensitiveKeys = caseSensitiveKeys;
