@@ -5,9 +5,9 @@ package com.fewlaps.quitnowcache;
  */
 class QNCacheBean<T> {
 
-    private long creationDate;
-    private long keepAliveInMillis;
-    private T value;
+    private final long creationDate;
+    private final long keepAliveInMillis;
+    private final T value;
 
     public QNCacheBean(T value, long creationDate, long keepAliveInMillis) {
         this.creationDate = creationDate;
