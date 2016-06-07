@@ -13,7 +13,7 @@ public class QNCacheBuilder {
     }
 
     public QNCacheBuilder setAutoRelease(int units, TimeUnit timeUnit) {
-        this.autoReleaseInSeconds = Math.toIntExact(timeUnit.toSeconds(units));
+        this.autoReleaseInSeconds = Long.valueOf(timeUnit.toSeconds(units)).intValue();
         return this;
     }
 
