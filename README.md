@@ -65,6 +65,16 @@ QNCache cache = new QNCacheBuilder().setDefaultKeepaliveInMillis(1000 * 60).crea
 QNCache cache = new QNCacheBuilder().createQNCache(); //the default keepalive: remember it forever!
 ```
 
+Why working with millis and seconds?
+---------------------------
+Good question! If you prefer to work with TimeUnit, you're free to do it.
+
+```java
+QNCache cache = new QNCacheBuilder().setAutoRelease(2, TimeUnit.HOURS).createQNCache();
+QNCache cache = new QNCacheBuilder().setDefaultKeepalive(5, TimeUnit.MINUTES).createQNCache();
+cache.set("key", "value", 42, TimeUnit.SECONDS);
+```
+
 #Download
 
 * Get <a href="https://github.com/Fewlaps/quitnow-cache/releases/download/v1.6.0/quitnow-cache-1.6.0.jar">the latest .jar</a>
