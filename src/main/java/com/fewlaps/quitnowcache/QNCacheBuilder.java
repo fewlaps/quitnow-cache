@@ -1,5 +1,7 @@
 package com.fewlaps.quitnowcache;
 
+import java.util.concurrent.TimeUnit;
+
 public class QNCacheBuilder {
     private boolean caseSensitiveKeys = true;
     private Integer autoReleaseInSeconds;
@@ -10,8 +12,18 @@ public class QNCacheBuilder {
         return this;
     }
 
+    public QNCacheBuilder setAutoRelease(int units, TimeUnit timeUnit) {
+        this.autoReleaseInSeconds = Math.toIntExact(timeUnit.toSeconds(units));
+        return this;
+    }
+
     public QNCacheBuilder setAutoReleaseInSeconds(Integer autoReleaseInSeconds) {
         this.autoReleaseInSeconds = autoReleaseInSeconds;
+        return this;
+    }
+
+    public QNCacheBuilder setDefaultKeepalive(int units, TimeUnit timeUnit) {
+        this.defaultKeepaliveInMillis = timeUnit.toMillis(units);
         return this;
     }
 

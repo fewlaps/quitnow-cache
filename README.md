@@ -6,9 +6,9 @@
 # [QuitNow!](http://quitnowapp.com)'s cache
 A memcached-like Java cache, focused on portability, great for Android.
 
-Before this library, QuitNow! and lots of apps we've seen are caching things until the system kills the app. That's not cool. In the other hand, developing a cache for that little improvement is not trivial. So, we decided to return the work to the open source community by writing this really simple cache, allowing developers to keep information only for a limited time.
+Before this library, caching data for a limited time was a hard task to do. The developer had to save the last time the data was stored, and then, check it everytime the data was read. So, we decided to return the work to the open source community by writing this really simple cache, allowing developers to keep information for a limted time.
 
-And we've done it using TDD, so it's totally tested. [Check the tests!](https://github.com/Fewlaps/quitnow-cache/tree/master/src/test/java/com/fewlaps/quitnowcache) :·)
+We've done it using TDD, so it's totally tested. [Check the tests!](https://github.com/Fewlaps/quitnow-cache/tree/master/src/test/java/com/fewlaps/quitnowcache) :·)
 
 The sample
 ----------
@@ -65,15 +65,25 @@ QNCache cache = new QNCacheBuilder().setDefaultKeepaliveInMillis(1000 * 60).crea
 QNCache cache = new QNCacheBuilder().createQNCache(); //the default keepalive: remember it forever!
 ```
 
+Why working with millis and seconds?
+---------------------------
+Good question! If you prefer to work with TimeUnit, you're free to do it.
+
+```java
+QNCache cache = new QNCacheBuilder().setAutoRelease(2, TimeUnit.HOURS).createQNCache();
+QNCache cache = new QNCacheBuilder().setDefaultKeepalive(5, TimeUnit.MINUTES).createQNCache();
+cache.set("key", "value", 42, TimeUnit.SECONDS);
+```
+
 #Download
 
-* Get <a href="https://github.com/Fewlaps/quitnow-cache/releases/download/v1.5.0/quitnow-cache-1.5.0.jar">the latest .jar</a> 
+* Get <a href="https://github.com/Fewlaps/quitnow-cache/releases/download/v1.6.0/quitnow-cache-1.6.0.jar">the latest .jar</a>
 
 * Grab via Gradle:
 ```groovy
 repositories { jcenter() }
     
-compile 'com.fewlaps.quitnowcache:quitnow-cache:1.5.0'
+compile 'com.fewlaps.quitnowcache:quitnow-cache:1.6.0'
 ```
 * Grab via Maven:
 ```xml
@@ -85,7 +95,7 @@ compile 'com.fewlaps.quitnowcache:quitnow-cache:1.5.0'
 <dependency>
     <groupId>com.fewlaps.quitnowcache</groupId>
     <artifactId>quitnow-cache</artifactId>
-    <version>1.5.0</version>
+    <version>1.6.0</version>
 </dependency>
 ```
 

@@ -1,5 +1,5 @@
 group 'com.fewlaps.quitnowcache'
-version '1.5.0'
+version '1.6.0'
 
 apply plugin: 'java'
 apply plugin: 'com.novoda.bintray-release'
@@ -34,7 +34,7 @@ publish {
     userOrg = 'fewlaps'
     groupId = 'com.fewlaps.quitnowcache'
     artifactId = 'quitnow-cache'
-    publishVersion = '1.5.0'
+    publishVersion = '1.6.0'
     desc = 'A memcached-like Java cache, focused on portability'
     website = 'https://github.com/Fewlaps/quitnow-cache'
 }
