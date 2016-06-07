@@ -3,6 +3,8 @@ package com.fewlaps.quitnowcache;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.concurrent.TimeUnit;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
@@ -163,5 +165,19 @@ public class SetAndGetValuesTest extends BaseTest {
     @Test
     public void containsReturnsFalseSomethingDoesntExist() {
         assertFalse(cache.contains(A_KEY));
+    }
+
+    @Test
+    public void savingSomethingForOneSecondsShouldReturnTheSameImmediatelly_usingSecondsTimeUnit() {
+        cache.set(A_KEY, A_VALUE, 1, TimeUnit.SECONDS);
+
+        assertEquals(A_VALUE, cache.get(A_KEY));
+    }
+
+    @Test
+    public void savingSomethingForOneSecondsShouldReturnTheSameImmediatelly_usingMillisTimeUnit() {
+        cache.set(A_KEY, A_VALUE, 1000, TimeUnit.MILLISECONDS);
+
+        assertEquals(A_VALUE, cache.get(A_KEY));
     }
 }
