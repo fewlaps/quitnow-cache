@@ -81,6 +81,10 @@ public class QNCache<T> {
         }
     }
 
+    public void set(String key, T value, long keepAliveUnits, TimeUnit timeUnit) {
+        set(key, value, timeUnit.toMillis(keepAliveUnits));
+    }
+
     /**
      * Gets an element from the cache.
      */
