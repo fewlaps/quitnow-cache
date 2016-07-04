@@ -27,7 +27,7 @@ cache.remove("key"); // and remove it if you want.
 cache.get("unExistingKey"); // If something doesn't exists, it returns null
 cache.get("tooOldKey"); // The same if a key is too old
 
-cache.removeAll(); // You can also clean it,
+cache.clean(); // You can also clean it,
 cache.size(); // and ask it how many elements it has
 
 QNCache<String> stringCache = new QNCacheBuilder().createQNCache(); //You can also make it typesafe

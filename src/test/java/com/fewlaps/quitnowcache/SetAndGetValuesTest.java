@@ -123,7 +123,7 @@ public class SetAndGetValuesTest extends BaseTest {
         cache.set(A_KEY, A_VALUE, TWO_HOURS);
         cache.set(ANOTHER_KEY, ANOTHER_VALUE, THREE_DAYS);
 
-        cache.removeAll();
+        cache.clear();
 
         assertNull(cache.get(A_KEY));
         assertNull(cache.get(ANOTHER_KEY));

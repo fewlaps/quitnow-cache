@@ -21,19 +21,19 @@ public class MemoryReleaseTest extends BaseTest {
         cache.set("3", A_VALUE, 3000);
 
         //checking that forgettingOldValues work
-        cache.removeTooOldValues();
+        cache.purge();
         assertEquals(3, cache.sizeCountingDeadAndAliveElements());
 
         Thread.sleep(1000);
-        cache.removeTooOldValues();
+        cache.purge();
         assertEquals(2, cache.sizeCountingDeadAndAliveElements());
 
         Thread.sleep(1000);
-        cache.removeTooOldValues();
+        cache.purge();
         assertEquals(1, cache.sizeCountingDeadAndAliveElements());
 
         Thread.sleep(1000);
-        cache.removeTooOldValues();
+        cache.purge();
         assertEquals(0, cache.sizeCountingDeadAndAliveElements());
     }
 

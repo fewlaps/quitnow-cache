@@ -48,7 +48,7 @@ public class SizeTest extends BaseTest {
         cache.set(A_KEY, A_VALUE, ONE_SECOND);
         cache.set(ANOTHER_KEY, ANOTHER_VALUE, THREE_DAYS);
 
-        cache.removeAll();
+        cache.clear();
 
         assertNull(cache.get(A_KEY));
         assertNull(cache.get(ANOTHER_KEY));
@@ -65,7 +65,7 @@ public class SizeTest extends BaseTest {
         cache.set(ANOTHER_KEY, ANOTHER_VALUE, THREE_DAYS);
         dateProvider.setFixed(twoHoursFromNow());
 
-        cache.removeTooOldValues();
+        cache.purge();
 
         assertNull(cache.get(A_KEY));
         assertEquals(ANOTHER_VALUE, cache.get(ANOTHER_KEY));

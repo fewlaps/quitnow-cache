@@ -38,7 +38,7 @@ public class QNCache<T> {
             ses.scheduleAtFixedRate(new Runnable() {
                 @Override
                 public void run() {
-                    removeTooOldValues();
+                    purge();
                 }
             }, autoReleaseInSeconds, autoReleaseInSeconds, TimeUnit.SECONDS);
         }
@@ -125,14 +125,14 @@ public class QNCache<T> {
     /**
      * Removes all the elements of the cache, ignoring if they're dead or alive
      */
-    public void removeAll() {
+    public void clear() {
         cache.clear();
     }
 
     /**
      * Removes the dead elements of the cache, to free memory
      */
-    void removeTooOldValues() {
+    void purge() {
         Iterator<Map.Entry<String, QNCacheBean<T>>> it = cache.entrySet().iterator();
 
         while (it.hasNext()) {

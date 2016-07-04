@@ -2,9 +2,6 @@ package com.fewlaps.quitnowcache;
 
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class IntroducingQNCacheTest {
 
     @SuppressWarnings("UnusedAssignment")
@@ -25,7 +22,7 @@ public class IntroducingQNCacheTest {
         cache.get("unExistingKey"); // If something doesn't exists, it returns null
         cache.get("tooOldKey"); // The same if a key is too old
 
-        cache.removeAll(); // You can also clean it,
+        cache.clear(); // You can also clean it,
         cache.size(); // and ask it how many elements it has
 
         QNCache<String> stringCache = new QNCacheBuilder().createQNCache(); //You can also make it typesafe
