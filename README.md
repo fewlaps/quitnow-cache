@@ -27,7 +27,7 @@ cache.remove("key"); // and remove it if you want.
 cache.get("unExistingKey"); // If something doesn't exists, it returns null
 cache.get("tooOldKey"); // The same if a key is too old
 
-cache.clean(); // You can also clean it,
+cache.clear(); // You can also clean it,
 cache.size(); // and ask it how many elements it has
 
 QNCache<String> stringCache = new QNCacheBuilder().createQNCache(); //You can also make it typesafe
@@ -77,13 +77,13 @@ cache.set("key", "value", 42, TimeUnit.SECONDS);
 
 #Download
 
-* Get <a href="https://github.com/Fewlaps/quitnow-cache/releases/download/v1.6.1/quitnow-cache-1.6.1.jar">the latest .jar</a>
+* Get <a href="https://github.com/Fewlaps/quitnow-cache/releases/download/v2.0.0/quitnow-cache-2.0.0.jar">the latest .jar</a>
 
 * Grab via Gradle:
 ```groovy
 repositories { jcenter() }
     
-compile 'com.fewlaps.quitnowcache:quitnow-cache:1.6.1'
+compile 'com.fewlaps.quitnowcache:quitnow-cache:2.0.0'
 ```
 * Grab via Maven:
 ```xml
@@ -95,7 +95,7 @@ compile 'com.fewlaps.quitnowcache:quitnow-cache:1.6.1'
 <dependency>
     <groupId>com.fewlaps.quitnowcache</groupId>
     <artifactId>quitnow-cache</artifactId>
-    <version>1.6.1</version>
+    <version>2.0.0</version>
 </dependency>
 ```
 
