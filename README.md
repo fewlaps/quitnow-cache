@@ -36,13 +36,13 @@ stringCache.set("key", 42); //so this line does not compile :)
 
 Let's talk about the memory
 ---------------------------
-By default, the cache stores a reference to all stored instances, doesn't matter if they're alive or they are too old. If you plan to store huge datasets, you can create it with an auto releaser. Then the cache will remove the old elements every 60 seconds, for example.
+By default, the cache stores a reference to all stored instances, doesn't matter if they're fresh or not. If you plan to store huge instance, like an Android's Bitmap, you can create it with an auto releaser. Then the cache will remove the old elements after the given amount of time.
 
 ```java
 QNCache cache = new QNCacheBuilder().setAutoReleaseInSeconds(1).createQNCache(); //frees the memory every second
 QNCache cache = new QNCacheBuilder().setAutoReleaseInSeconds(60).createQNCache(); //frees the memory every minute
 QNCache cache = new QNCacheBuilder().setAutoReleaseInSeconds(60*60).createQNCache(); //frees the memory every hour
-QNCache cache = new QNCacheBuilder().createQNCache(); //never frees the memory
+QNCache cache = new QNCacheBuilder().createQNCache(); //will never free the invalidated items from memory
 ```
 
 Are the keys case sensitive?
