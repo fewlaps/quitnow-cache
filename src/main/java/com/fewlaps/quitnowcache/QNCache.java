@@ -1,11 +1,14 @@
 package com.fewlaps.quitnowcache;
 
+import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 public class QNCache<T> {
 
@@ -194,5 +197,30 @@ public class QNCache<T> {
             return key.toLowerCase();
         }
         return key;
+    }
+    
+    /**
+     * Find 
+     */
+    List<String> findStartsWith(String someCuquiWord) {
+    	final String key = getEffectiveKey(someCuquiWord);
+
+    	return Collections.list(cache.keys())
+    			.stream()
+    			.filter(s -> s.startsWith(key))
+    			.collect(Collectors.toList());
+    }
+    
+    /**
+     * Finding coincidences
+     */
+    List<String> findStartsWithIfAlive(String someCuquiWord) {
+    	final String key = getEffectiveKey(someCuquiWord);
+    	final long now = now();
+    	
+    	return Collections.list(cache.keys())
+    			.stream()
+    			.filter(s -> s.startsWith(key) && cache.get(key).isAlive(now))
+    			.collect(Collectors.toList());
     }
 }
