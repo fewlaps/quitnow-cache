@@ -73,10 +73,6 @@ public class QNCache<T> {
         } else {
             set(key, value, KEEPALIVE_FOREVER);
         }
-    	System.out.println("Juanete ^^ ");
-        for (String s : Collections.list(cache.keys())) {
-        	System.out.println("Juanete -> " + s);
-        }
     }
 
     public void set(String key, T value, long keepAliveInMillis) {
