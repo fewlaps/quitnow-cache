@@ -1,5 +1,6 @@
 package com.fewlaps.quitnowcache;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -8,7 +9,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
 
 public class QNCache<T> {
 
@@ -73,6 +73,10 @@ public class QNCache<T> {
         } else {
             set(key, value, KEEPALIVE_FOREVER);
         }
+    	System.out.println("Juanete ^^ ");
+        for (String s : Collections.list(cache.keys())) {
+        	System.out.println("Juanete -> " + s);
+        }
     }
 
     public void set(String key, T value, long keepAliveInMillis) {
@@ -83,6 +87,33 @@ public class QNCache<T> {
         }
     }
 
+    public List<String> listCachedKeysStartingWith(String keyStartingWith) {
+       	List<String> keys = new ArrayList<String>();
+    	keyStartingWith = getEffectiveKey(keyStartingWith);    	
+
+    	for (String key : Collections.list(cache.keys())) {	
+			if (key.startsWith(keyStartingWith)) {
+    			keys.add(key);
+			}
+    	}
+    	
+    	return keys;
+    }
+    
+    public List<String> listCachedKeysStartingWithIfAlive(String keyStartingWith) {
+       	List<String> keys = new ArrayList<String>();
+       	final long now = now();
+    	keyStartingWith = getEffectiveKey(keyStartingWith);    	
+    	
+    	for (String key : Collections.list(cache.keys())) {	
+			if (key.startsWith(keyStartingWith) && cache.get(key).isAlive(now)) {
+    			keys.add(key);
+			}
+    	}
+    	
+    	return keys;
+    }
+    
     public void set(String key, T value, long keepAliveUnits, TimeUnit timeUnit) {
         set(key, value, timeUnit.toMillis(keepAliveUnits));
     }
@@ -199,28 +230,4 @@ public class QNCache<T> {
         return key;
     }
     
-    /**
-     * Find 
-     */
-    List<String> findStartsWith(String someCuquiWord) {
-    	final String key = getEffectiveKey(someCuquiWord);
-
-    	return Collections.list(cache.keys())
-    			.stream()
-    			.filter(s -> s.startsWith(key))
-    			.collect(Collectors.toList());
-    }
-    
-    /**
-     * Finding coincidences
-     */
-    List<String> findStartsWithIfAlive(String someCuquiWord) {
-    	final String key = getEffectiveKey(someCuquiWord);
-    	final long now = now();
-    	
-    	return Collections.list(cache.keys())
-    			.stream()
-    			.filter(s -> s.startsWith(key) && cache.get(key).isAlive(now))
-    			.collect(Collectors.toList());
-    }
 }
