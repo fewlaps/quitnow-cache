@@ -99,7 +99,9 @@ public class QNCache<T> {
 
     /**
      * Gets an element from the cache. If the element exists but it's dead,
-     * it will be removed of the cache, to free memory
+     * it will be removed from the cache to free memory. It could call
+     * an internal synchronized method, so avoid calling this method if
+     * it's not needed.
      */
     public T getAndRemoveIfDead(String key) {
         String effectiveKey = getEffectiveKey(key);
