@@ -77,13 +77,13 @@ cache.set("key", "value", 42, TimeUnit.SECONDS);
 
 #Download
 
-* Get <a href="https://github.com/Fewlaps/quitnow-cache/releases/download/v2.0.0/quitnow-cache-2.0.0.jar">the latest .jar</a>
+* Get <a href="https://github.com/Fewlaps/quitnow-cache/releases/download/v3.0.0/quitnow-cache-3.0.0.jar">the latest .jar</a>
 
 * Grab via Gradle:
 ```groovy
 repositories { jcenter() }
     
-compile 'com.fewlaps.quitnowcache:quitnow-cache:2.0.0'
+compile 'com.fewlaps.quitnowcache:quitnow-cache:3.0.0'
 ```
 * Grab via Maven:
 ```xml
@@ -95,7 +95,7 @@ compile 'com.fewlaps.quitnowcache:quitnow-cache:2.0.0'
 <dependency>
     <groupId>com.fewlaps.quitnowcache</groupId>
     <artifactId>quitnow-cache</artifactId>
-    <version>2.0.0</version>
+    <version>3.0.0</version>
 </dependency>
 ```
 
