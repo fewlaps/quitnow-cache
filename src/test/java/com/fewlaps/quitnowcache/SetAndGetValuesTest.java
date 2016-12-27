@@ -78,7 +78,7 @@ public class SetAndGetValuesTest extends BaseTest {
         cache.set(A_KEY, A_VALUE, -1);
         cache.set(ANOTHER_KEY, ANOTHER_VALUE, THREE_DAYS);
 
-        assertNull(cache.getAndRemoveIfDead(A_KEY));
+        assertNull(cache.getAndPurgeIfDead(A_KEY));
         assertEquals(1, cache.size());
         assertEquals(1, cache.sizeDeadAndAliveElements());
     }
@@ -90,7 +90,7 @@ public class SetAndGetValuesTest extends BaseTest {
 
         dateProvider.setFixed(twoHoursFromNow());
 
-        assertNull(cache.getAndRemoveIfDead(A_KEY));
+        assertNull(cache.getAndPurgeIfDead(A_KEY));
         assertEquals(1, cache.size());
         assertEquals(1, cache.sizeDeadAndAliveElements());
     }
@@ -102,7 +102,7 @@ public class SetAndGetValuesTest extends BaseTest {
 
         dateProvider.setFixed(twoHoursFromNow());
 
-        assertEquals(ANOTHER_VALUE, cache.getAndRemoveIfDead(ANOTHER_KEY));
+        assertEquals(ANOTHER_VALUE, cache.getAndPurgeIfDead(ANOTHER_KEY));
         assertEquals(1, cache.size());
         assertEquals(2, cache.sizeDeadAndAliveElements());
     }

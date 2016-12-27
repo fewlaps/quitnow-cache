@@ -103,7 +103,7 @@ public class QNCache<T> {
      * an internal synchronized method, so avoid calling this method if
      * it's not needed.
      */
-    public T getAndRemoveIfDead(String key) {
+    public T getAndPurgeIfDead(String key) {
         String effectiveKey = getEffectiveKey(key);
 
         QNCacheBean<T> retrievedValue = cache.get(effectiveKey);
