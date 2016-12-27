@@ -22,19 +22,19 @@ public class MemoryReleaseTest extends BaseTest {
 
         //checking that forgettingOldValues work
         cache.purge();
-        assertEquals(3, cache.sizeCountingDeadAndAliveElements());
+        assertEquals(3, cache.sizeDeadAndAliveElements());
 
         Thread.sleep(1000);
         cache.purge();
-        assertEquals(2, cache.sizeCountingDeadAndAliveElements());
+        assertEquals(2, cache.sizeDeadAndAliveElements());
 
         Thread.sleep(1000);
         cache.purge();
-        assertEquals(1, cache.sizeCountingDeadAndAliveElements());
+        assertEquals(1, cache.sizeDeadAndAliveElements());
 
         Thread.sleep(1000);
         cache.purge();
-        assertEquals(0, cache.sizeCountingDeadAndAliveElements());
+        assertEquals(0, cache.sizeDeadAndAliveElements());
     }
 
     @Test
@@ -47,8 +47,8 @@ public class MemoryReleaseTest extends BaseTest {
         cache.set("3", A_VALUE, 3000);
 
         //checking that forgettingOldValues work
-        assertEquals(3, cache.sizeCountingDeadAndAliveElements());
+        assertEquals(3, cache.sizeDeadAndAliveElements());
         Thread.sleep(5000);
-        assertEquals(0, cache.sizeCountingDeadAndAliveElements());
+        assertEquals(0, cache.sizeDeadAndAliveElements());
     }
 }

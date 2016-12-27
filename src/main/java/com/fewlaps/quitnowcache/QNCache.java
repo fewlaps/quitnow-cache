@@ -79,6 +79,54 @@ public class QNCache<T> {
         }
     }
 
+    public void set(String key, T value, long keepAliveUnits, TimeUnit timeUnit) {
+        set(key, value, timeUnit.toMillis(keepAliveUnits));
+    }
+
+    /**
+     * Gets an element from the cache.
+     */
+    public T get(String key) {
+        String effectiveKey = getEffectiveKey(key);
+
+        QNCacheBean<T> retrievedValue = cache.get(effectiveKey);
+        if (retrievedValue == null || !retrievedValue.isAlive(now())) {
+            return null;
+        } else {
+            return retrievedValue.getValue();
+        }
+    }
+
+    /**
+     * Gets an element from the cache. If the element exists but it's dead,
+     * it will be removed of the cache, to free memory
+     */
+    public T getAndRemoveIfDead(String key) {
+        String effectiveKey = getEffectiveKey(key);
+
+        QNCacheBean<T> retrievedValue = cache.get(effectiveKey);
+        if (retrievedValue == null) {
+            return null;
+        } else if (retrievedValue.isAlive(now())) {
+            return retrievedValue.getValue();
+        } else {
+            cache.remove(effectiveKey);
+            return null;
+        }
+    }
+
+    public void remove(String key) {
+        String effectiveKey = getEffectiveKey(key);
+        cache.remove(effectiveKey);
+    }
+
+    /**
+     * Removes all the elements of the cache, ignoring if they're dead or alive
+     */
+    public void clear() {
+        cache.clear();
+    }
+
     public List<String> keySet() {
         return Collections.list(cache.keys());
     }
@@ -125,52 +173,58 @@ public class QNCache<T> {
         return cache.get(effectiveKey).isAlive(now());
     }
 
-    public void set(String key, T value, long keepAliveUnits, TimeUnit timeUnit) {
-        set(key, value, timeUnit.toMillis(keepAliveUnits));
+    public boolean isKeyDead(String key) {
+        return !isKeyAlive(key);
     }
 
     /**
-     * Gets an element from the cache.
+     * Counts how much alive elements are living in the cache
      */
-    public T get(String key) {
-        String effectiveKey = getEffectiveKey(key);
+    public int size() {
+        return sizeAliveElements();
+    }
 
-        QNCacheBean<T> retrievedValue = cache.get(effectiveKey);
-        if (retrievedValue == null || !retrievedValue.isAlive(now())) {
-            return null;
-        } else {
-            return retrievedValue.getValue();
+    /**
+     * Counts how much alive elements are living in the cache
+     */
+    public int sizeAliveElements() {
+        int size = 0;
+
+        for (QNCacheBean<T> cacheValue : cache.values()) {
+            if (cacheValue.isAlive(now())) {
+                size++;
+            }
         }
+        return size;
     }
 
     /**
-     * Gets an element from the cache. If the element exists but it's dead,
-     * it will be removed of the cache, to free memory
+     * Counts how much dead elements exist in the cache
      */
-    T getAndRemoveIfDead(String key) {
-        String effectiveKey = getEffectiveKey(key);
-
-        QNCacheBean<T> retrievedValue = cache.get(effectiveKey);
-        if (retrievedValue == null) {
-            return null;
-        } else if (retrievedValue.isAlive(now())) {
-            return retrievedValue.getValue();
-        } else {
-            cache.remove(effectiveKey);
-            return null;
-        }
-    }
-
-    public void remove(String key) {
-        String effectiveKey = getEffectiveKey(key);
-        cache.remove(effectiveKey);
+    public int sizeDeadElements() {
+        return cache.size() - sizeAliveElements();
     }
 
     /**
-     * Removes all the elements of the cache, ignoring if they're dead or alive
+     * Counts how much elements are living in the cache, ignoring if they are dead or alive
      */
-    public void clear() {
-        cache.clear();
+    public int sizeDeadAndAliveElements() {
+        return cache.size();
+    }
+
+    /**
+     * The common isEmpty() method, but only looking for alive elements
+     */
+    public boolean isEmpty() {
+        return sizeAliveElements() == 0;
+    }
+
+    /**
+     * The common contains() method
+     */
+    public boolean contains(String key) {
+        String effectiveKey = getEffectiveKey(key);
+        return get(effectiveKey) != null;
     }
 
     /**
@@ -186,46 +240,6 @@ public class QNCache<T> {
                 it.remove();
             }
         }
-    }
-
-    /**
-     * Counts how much alive elements are living in the cache
-     */
-    public int size() {
-        return sizeCountingOnlyAliveElements();
-    }
-
-    /**
-     * Counts how much alive elements are living in the cache
-     */
-    int sizeCountingOnlyAliveElements() {
-        int size = 0;
-
-        for (QNCacheBean<T> cacheValue : cache.values()) {
-            if (cacheValue.isAlive(now())) {
-                size++;
-            }
-        }
-        return size;
-    }
-
-    /**
-     * Counts how much elements are living in the cache, ignoring if they are dead or alive
-     */
-    int sizeCountingDeadAndAliveElements() {
-        return cache.size();
-    }
-
-    /**
-     * The common isEmpty() method, but only looking for alive elements
-     */
-    public boolean isEmpty() {
-        return sizeCountingOnlyAliveElements() == 0;
-    }
-
-    public boolean contains(String key) {
-        String effectiveKey = getEffectiveKey(key);
-        return get(effectiveKey) != null;
     }
 
     /**

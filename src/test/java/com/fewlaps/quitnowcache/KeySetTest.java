@@ -25,7 +25,7 @@ public class KeySetTest extends BaseTest {
     }
 
     @Test
-    public void keySetReturnTheSameNumberAsAddedItems() {
+    public void keySetReturnsTheSameNumberAsAddedItems() {
         cache.set(A_KEY, A_VALUE);
         cache.set(ANOTHER_KEY, ANOTHER_VALUE, THREE_DAYS);
 
@@ -93,6 +93,9 @@ public class KeySetTest extends BaseTest {
 
         assertTrue(cache.isKeyAlive(A_KEY));
         assertFalse(cache.isKeyAlive(ANOTHER_KEY));
+
+        assertFalse(cache.isKeyDead(A_KEY));
+        assertTrue(cache.isKeyDead(ANOTHER_KEY));
     }
 
 }

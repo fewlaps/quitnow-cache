@@ -70,7 +70,7 @@ public class SetAndGetValuesTest extends BaseTest {
 
         assertNull(cache.get(A_KEY));
         assertEquals(1, cache.size());
-        assertEquals(1, cache.sizeCountingDeadAndAliveElements());
+        assertEquals(1, cache.sizeDeadAndAliveElements());
     }
 
     @Test
@@ -80,7 +80,7 @@ public class SetAndGetValuesTest extends BaseTest {
 
         assertNull(cache.getAndRemoveIfDead(A_KEY));
         assertEquals(1, cache.size());
-        assertEquals(1, cache.sizeCountingDeadAndAliveElements());
+        assertEquals(1, cache.sizeDeadAndAliveElements());
     }
 
     @Test
@@ -92,7 +92,7 @@ public class SetAndGetValuesTest extends BaseTest {
 
         assertNull(cache.getAndRemoveIfDead(A_KEY));
         assertEquals(1, cache.size());
-        assertEquals(1, cache.sizeCountingDeadAndAliveElements());
+        assertEquals(1, cache.sizeDeadAndAliveElements());
     }
 
     @Test
@@ -104,7 +104,7 @@ public class SetAndGetValuesTest extends BaseTest {
 
         assertEquals(ANOTHER_VALUE, cache.getAndRemoveIfDead(ANOTHER_KEY));
         assertEquals(1, cache.size());
-        assertEquals(2, cache.sizeCountingDeadAndAliveElements());
+        assertEquals(2, cache.sizeDeadAndAliveElements());
     }
 
     @Test

@@ -3,10 +3,7 @@ package com.fewlaps.quitnowcache;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class SizeTest extends BaseTest {
 
@@ -54,8 +51,9 @@ public class SizeTest extends BaseTest {
         assertNull(cache.get(ANOTHER_KEY));
 
         assertEquals(0, cache.size());
-        assertEquals(0, cache.sizeCountingDeadAndAliveElements());
-        assertEquals(0, cache.sizeCountingOnlyAliveElements());
+        assertEquals(0, cache.sizeAliveElements());
+        assertEquals(0, cache.sizeDeadElements());
+        assertEquals(0, cache.sizeDeadAndAliveElements());
         assertTrue(cache.isEmpty());
     }
 
@@ -71,8 +69,9 @@ public class SizeTest extends BaseTest {
         assertEquals(ANOTHER_VALUE, cache.get(ANOTHER_KEY));
 
         assertEquals(1, cache.size());
-        assertEquals(1, cache.sizeCountingDeadAndAliveElements());
-        assertEquals(1, cache.sizeCountingOnlyAliveElements());
+        assertEquals(1, cache.sizeAliveElements());
+        assertEquals(0, cache.sizeDeadElements());
+        assertEquals(1, cache.sizeDeadAndAliveElements());
         assertFalse(cache.isEmpty());
     }
 }
