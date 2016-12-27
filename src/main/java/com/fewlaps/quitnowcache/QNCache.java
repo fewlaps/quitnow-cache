@@ -94,7 +94,7 @@ public class QNCache<T> {
 
     public List<String> listCachedKeysStartingWithIfAlive(String keyStartingWith) {
         List<String> keys = new ArrayList<String>();
-        final long now = now();
+        long now = now();
         String effectiveKeyStartingWith = getEffectiveKey(keyStartingWith);
 
         for (String key : Collections.list(cache.keys())) {
