@@ -1,10 +1,6 @@
 package com.fewlaps.quitnowcache;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -84,32 +80,32 @@ public class QNCache<T> {
     }
 
     public List<String> listCachedKeysStartingWith(String keyStartingWith) {
-       	List<String> keys = new ArrayList<String>();
+        List<String> keys = new ArrayList<String>();
         String effectiveKeyStartingWith = getEffectiveKey(keyStartingWith);
 
-    	for (String key : Collections.list(cache.keys())) {	
-			if (key.startsWith(effectiveKeyStartingWith)) {
-    			keys.add(key);
-			}
-    	}
-    	
-    	return keys;
+        for (String key : Collections.list(cache.keys())) {
+            if (key.startsWith(effectiveKeyStartingWith)) {
+                keys.add(key);
+            }
+        }
+
+        return keys;
     }
-    
+
     public List<String> listCachedKeysStartingWithIfAlive(String keyStartingWith) {
-       	List<String> keys = new ArrayList<String>();
-       	final long now = now();
+        List<String> keys = new ArrayList<String>();
+        final long now = now();
         String effectiveKeyStartingWith = getEffectiveKey(keyStartingWith);
-    	
-    	for (String key : Collections.list(cache.keys())) {	
-			if (key.startsWith(effectiveKeyStartingWith) && cache.get(key).isAlive(now)) {
-    			keys.add(key);
-			}
-    	}
-    	
-    	return keys;
+
+        for (String key : Collections.list(cache.keys())) {
+            if (key.startsWith(effectiveKeyStartingWith) && cache.get(key).isAlive(now)) {
+                keys.add(key);
+            }
+        }
+
+        return keys;
     }
-    
+
     public void set(String key, T value, long keepAliveUnits, TimeUnit timeUnit) {
         set(key, value, timeUnit.toMillis(keepAliveUnits));
     }
@@ -186,7 +182,7 @@ public class QNCache<T> {
     int sizeCountingOnlyAliveElements() {
         int size = 0;
 
-        for(QNCacheBean<T> cacheValue: cache.values()) {
+        for (QNCacheBean<T> cacheValue : cache.values()) {
             if (cacheValue.isAlive(now())) {
                 size++;
             }
@@ -223,5 +219,5 @@ public class QNCache<T> {
         }
         return key;
     }
-    
+
 }
