@@ -21,7 +21,7 @@ public class KeySetTest extends BaseTest {
 
     @Test
     public void keySetIsEmptyWhenCacheHasBeenJustCreated() {
-        assertEquals(0, cache.keySet().size());
+        assertEquals(0, cache.keySetDeadAndAlive().size());
     }
 
     @Test
@@ -29,17 +29,29 @@ public class KeySetTest extends BaseTest {
         cache.set(A_KEY, A_VALUE);
         cache.set(ANOTHER_KEY, ANOTHER_VALUE, THREE_DAYS);
 
-        assertEquals(2, cache.keySet().size());
+        assertEquals(2, cache.keySetDeadAndAlive().size());
     }
 
     @Test
     public void keySetAliveReturnsOnlyAliveKeys() {
-        cache.set(A_KEY, A_VALUE);
-        cache.set(ANOTHER_KEY, ANOTHER_VALUE, ONE_SECOND);
+        cache.set("a", A_VALUE);
+        cache.set("b", A_VALUE);
+        cache.set("c", A_VALUE, ONE_SECOND);
 
         dateProvider.setFixed(threeDaysFromNow());
 
-        assertEquals(1, cache.keySetAlive().size());
+        assertEquals(2, cache.keySetAlive().size());
+    }
+
+    @Test
+    public void keySetDeadReturnsOnlyDeadKeys() {
+        cache.set("a", A_VALUE);
+        cache.set("b", A_VALUE);
+        cache.set("c", A_VALUE, ONE_SECOND);
+
+        dateProvider.setFixed(threeDaysFromNow());
+
+        assertEquals(1, cache.keySetDead().size());
     }
 
     @Test
@@ -49,6 +61,12 @@ public class KeySetTest extends BaseTest {
         cache.clear();
 
         assertEquals(0, cache.keySetStartingWith(A_KEY).size());
+    }
+
+    @Test
+    public void keySetStartingWithShouldNeverCrash() {
+        assertEquals(0, cache.keySetStartingWith(null).size());
+        assertEquals(0, cache.keySetStartingWith("").size());
     }
 
     @Test
@@ -69,10 +87,11 @@ public class KeySetTest extends BaseTest {
 
     @Test
     public void setAndFindMoreThanOne() {
-        cache.set(A_KEY, A_VALUE);
-        cache.set(ANOTHER_KEY, ANOTHER_VALUE, THREE_DAYS);
+        cache.set("weLoveAndroid", A_VALUE);
+        cache.set("weLoveLinux", ANOTHER_VALUE, THREE_DAYS);
+        cache.set("weHateNothing", ANOTHER_VALUE, THREE_DAYS);
 
-        assertEquals(2, cache.keySetStartingWith(JUST_A).size());
+        assertEquals(2, cache.keySetStartingWith("weLove").size());
     }
 
     @Test

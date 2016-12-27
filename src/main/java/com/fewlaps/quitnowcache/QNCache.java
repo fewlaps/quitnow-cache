@@ -127,14 +127,14 @@ public class QNCache<T> {
         cache.clear();
     }
 
-    public List<String> keySet() {
+    public List<String> keySetDeadAndAlive() {
         return Collections.list(cache.keys());
     }
 
     public List<String> keySetAlive() {
         List<String> aliveKeys = new ArrayList<String>();
 
-        for (String key : keySet()) {
+        for (String key : keySetDeadAndAlive()) {
             if (isKeyAlive(key)) {
                 aliveKeys.add(key);
             }
@@ -143,29 +143,41 @@ public class QNCache<T> {
         return aliveKeys;
     }
 
-    public List<String> keySetStartingWith(String keyStartingWith) {
-        List<String> keys = new ArrayList<String>();
-        String effectiveKeyStartingWith = getEffectiveKey(keyStartingWith);
+    public List<String> keySetDead() {
+        List<String> aliveKeys = new ArrayList<String>();
 
-        for (String key : keySet()) {
-            if (key.startsWith(effectiveKeyStartingWith)) {
-                keys.add(key);
+        for (String key : keySetDeadAndAlive()) {
+            if (isKeyDead(key)) {
+                aliveKeys.add(key);
             }
         }
 
-        return keys;
+        return aliveKeys;
+    }
+
+    public List<String> keySetStartingWith(String keyStartingWith) {
+        List<String> filteredKeys = new ArrayList<String>();
+        String effectiveKeyStartingWith = getEffectiveKey(keyStartingWith);
+
+        for (String key : keySetDeadAndAlive()) {
+            if (key.startsWith(effectiveKeyStartingWith)) {
+                filteredKeys.add(key);
+            }
+        }
+
+        return filteredKeys;
     }
 
     public List<String> keySetAliveStartingWith(String keyStartingWith) {
-        List<String> keys = new ArrayList<String>();
+        List<String> aliveFilteredKeys = new ArrayList<String>();
 
         for (String key : keySetStartingWith(keyStartingWith)) {
             if (isKeyAlive(key)) {
-                keys.add(key);
+                aliveFilteredKeys.add(key);
             }
         }
 
-        return keys;
+        return aliveFilteredKeys;
     }
 
     public boolean isKeyAlive(String key) {
