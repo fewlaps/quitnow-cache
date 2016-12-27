@@ -1,6 +1,9 @@
 package com.fewlaps.quitnowcache;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executors;
@@ -80,6 +83,33 @@ public class QNCache<T> {
         }
     }
 
+    public List<String> listCachedKeysStartingWith(String keyStartingWith) {
+       	List<String> keys = new ArrayList<String>();
+    	keyStartingWith = getEffectiveKey(keyStartingWith);    	
+
+    	for (String key : Collections.list(cache.keys())) {	
+			if (key.startsWith(keyStartingWith)) {
+    			keys.add(key);
+			}
+    	}
+    	
+    	return keys;
+    }
+    
+    public List<String> listCachedKeysStartingWithIfAlive(String keyStartingWith) {
+       	List<String> keys = new ArrayList<String>();
+       	final long now = now();
+    	keyStartingWith = getEffectiveKey(keyStartingWith);    	
+    	
+    	for (String key : Collections.list(cache.keys())) {	
+			if (key.startsWith(keyStartingWith) && cache.get(key).isAlive(now)) {
+    			keys.add(key);
+			}
+    	}
+    	
+    	return keys;
+    }
+    
     public void set(String key, T value, long keepAliveUnits, TimeUnit timeUnit) {
         set(key, value, timeUnit.toMillis(keepAliveUnits));
     }
@@ -195,4 +225,5 @@ public class QNCache<T> {
         }
         return key;
     }
+    
 }

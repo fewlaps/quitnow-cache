@@ -8,6 +8,7 @@ public abstract class BaseTest {
     public static final String A_VALUE = "aLovelyValue";
     public static final String ANOTHER_KEY = "anotherLovelyKey";
     public static final String ANOTHER_VALUE = "anotherLovelyValue";
+    public static final String JUST_A = "a";
 
     public static final long FOREVER = 0;
     public static final long ONE_SECOND = 1000;
