@@ -95,10 +95,9 @@ public class QNCache<T> {
     public List<String> listCachedKeysStartingWithIfAlive(String keyStartingWith) {
         List<String> keys = new ArrayList<String>();
         long now = now();
-        String effectiveKeyStartingWith = getEffectiveKey(keyStartingWith);
 
-        for (String key : Collections.list(cache.keys())) {
-            if (key.startsWith(effectiveKeyStartingWith) && cache.get(key).isAlive(now)) {
+        for (String key : listCachedKeysStartingWith(keyStartingWith)) {
+            if (cache.get(key).isAlive(now)) {
                 keys.add(key);
             }
         }
