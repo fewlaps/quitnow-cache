@@ -79,11 +79,27 @@ public class QNCache<T> {
         }
     }
 
-    public List<String> listCachedKeysStartingWith(String keyStartingWith) {
+    public List<String> keySet() {
+        return Collections.list(cache.keys());
+    }
+
+    public List<String> keySetAlive() {
+        List<String> aliveKeys = new ArrayList<String>();
+
+        for (String key : keySet()) {
+            if (isKeyAlive(key)) {
+                aliveKeys.add(key);
+            }
+        }
+
+        return aliveKeys;
+    }
+
+    public List<String> keySetStartingWith(String keyStartingWith) {
         List<String> keys = new ArrayList<String>();
         String effectiveKeyStartingWith = getEffectiveKey(keyStartingWith);
 
-        for (String key : Collections.list(cache.keys())) {
+        for (String key : keySet()) {
             if (key.startsWith(effectiveKeyStartingWith)) {
                 keys.add(key);
             }
@@ -92,17 +108,21 @@ public class QNCache<T> {
         return keys;
     }
 
-    public List<String> listCachedKeysStartingWithIfAlive(String keyStartingWith) {
+    public List<String> keySetAliveStartingWith(String keyStartingWith) {
         List<String> keys = new ArrayList<String>();
-        long now = now();
 
-        for (String key : listCachedKeysStartingWith(keyStartingWith)) {
-            if (cache.get(key).isAlive(now)) {
+        for (String key : keySetStartingWith(keyStartingWith)) {
+            if (isKeyAlive(key)) {
                 keys.add(key);
             }
         }
 
         return keys;
+    }
+
+    public boolean isKeyAlive(String key) {
+        String effectiveKey = key;
+        return cache.get(effectiveKey).isAlive(now());
     }
 
     public void set(String key, T value, long keepAliveUnits, TimeUnit timeUnit) {
@@ -218,5 +238,4 @@ public class QNCache<T> {
         }
         return key;
     }
-
 }
