@@ -76,19 +76,19 @@ public class QNCache<T> {
     }
 
     public void set(String key, T value, long keepAliveInMillis) {
-        key = getEffectiveKey(key);
+        String effectiveKey = getEffectiveKey(key);
 
         if (keepAliveInMillis >= 0) {
-            cache.put(key, new QNCacheBean<T>(value, now(), keepAliveInMillis));
+            cache.put(effectiveKey, new QNCacheBean<T>(value, now(), keepAliveInMillis));
         }
     }
 
     public List<String> listCachedKeysStartingWith(String keyStartingWith) {
        	List<String> keys = new ArrayList<String>();
-    	keyStartingWith = getEffectiveKey(keyStartingWith);    	
+        String effectiveKeyStartingWith = getEffectiveKey(keyStartingWith);
 
     	for (String key : Collections.list(cache.keys())) {	
-			if (key.startsWith(keyStartingWith)) {
+			if (key.startsWith(effectiveKeyStartingWith)) {
     			keys.add(key);
 			}
     	}
@@ -99,10 +99,10 @@ public class QNCache<T> {
     public List<String> listCachedKeysStartingWithIfAlive(String keyStartingWith) {
        	List<String> keys = new ArrayList<String>();
        	final long now = now();
-    	keyStartingWith = getEffectiveKey(keyStartingWith);    	
+        String effectiveKeyStartingWith = getEffectiveKey(keyStartingWith);
     	
     	for (String key : Collections.list(cache.keys())) {	
-			if (key.startsWith(keyStartingWith) && cache.get(key).isAlive(now)) {
+			if (key.startsWith(effectiveKeyStartingWith) && cache.get(key).isAlive(now)) {
     			keys.add(key);
 			}
     	}
@@ -118,9 +118,9 @@ public class QNCache<T> {
      * Gets an element from the cache.
      */
     public T get(String key) {
-        key = getEffectiveKey(key);
+        String effectiveKey = getEffectiveKey(key);
 
-        QNCacheBean<T> retrievedValue = cache.get(key);
+        QNCacheBean<T> retrievedValue = cache.get(effectiveKey);
         if (retrievedValue == null || !retrievedValue.isAlive(now())) {
             return null;
         } else {
@@ -133,23 +133,22 @@ public class QNCache<T> {
      * it will be removed of the cache, to free memory
      */
     T getAndRemoveIfDead(String key) {
-        key = getEffectiveKey(key);
+        String effectiveKey = getEffectiveKey(key);
 
-        QNCacheBean<T> retrievedValue = cache.get(key);
+        QNCacheBean<T> retrievedValue = cache.get(effectiveKey);
         if (retrievedValue == null) {
             return null;
         } else if (retrievedValue.isAlive(now())) {
             return retrievedValue.getValue();
         } else {
-            cache.remove(key);
+            cache.remove(effectiveKey);
             return null;
         }
     }
 
     public void remove(String key) {
-        key = getEffectiveKey(key);
-
-        cache.remove(key);
+        String effectiveKey = getEffectiveKey(key);
+        cache.remove(effectiveKey);
     }
 
     /**
@@ -210,9 +209,8 @@ public class QNCache<T> {
     }
 
     public boolean contains(String key) {
-        key = getEffectiveKey(key);
-
-        return get(key) != null;
+        String effectiveKey = getEffectiveKey(key);
+        return get(effectiveKey) != null;
     }
 
     /**
