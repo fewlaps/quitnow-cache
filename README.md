@@ -27,11 +27,11 @@ cache.remove("key"); // and remove it if you want.
 cache.get("unExistingKey"); // If something doesn't exists, it returns null
 cache.get("tooOldKey"); // The same if a key is too old
 
-cache.clear(); // You can also clean it,
+cache.clear(); // You can also clear it,
 cache.size(); // and ask it how many elements it has
 
-QNCache<String> stringCache = new QNCacheBuilder().createQNCache(); //You can also make it typesafe
-stringCache.set("key", 42); //so this line does not compile :)
+QNCache<String> stringCache = new QNCacheBuilder().createQNCache(); // You can also make it typesafe
+stringCache.set("key", 42); // so this line does not compile :)
 ```
 
 Let's talk about the memory
