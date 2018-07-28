@@ -98,6 +98,18 @@ public class QNCache<T> {
     }
 
     /**
+     * Gets an element from the cache. If it's null, the default value will be returned instead.
+     */
+    public T getOrDefault(String key, T defaultValue) {
+        T value = get(key);
+        if (value == null) {
+            return defaultValue;
+        } else {
+            return value;
+        }
+    }
+
+    /**
      * Gets an element from the cache. If the element exists but it's dead,
      * it will be removed from the cache to free memory. It could call
      * an internal synchronized method, so avoid calling this method if
