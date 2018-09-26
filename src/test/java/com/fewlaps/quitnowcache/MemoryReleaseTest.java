@@ -3,6 +3,7 @@ package com.fewlaps.quitnowcache;
 import org.junit.Before;
 import org.junit.Test;
 
+import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 
 public class MemoryReleaseTest extends BaseTest {
@@ -50,5 +51,16 @@ public class MemoryReleaseTest extends BaseTest {
         assertEquals(3, cache.sizeDeadAndAliveElements());
         Thread.sleep(5000);
         assertEquals(0, cache.sizeDeadAndAliveElements());
+    }
+
+    @Test
+    public void autoReleaserCreatesAThread() {
+        int threadsBefore = Thread.activeCount();
+
+        new QNCacheBuilder().setAutoReleaseInSeconds(1).createQNCache();
+
+        int threadsAfter = Thread.activeCount();
+
+        assertTrue(threadsBefore < threadsAfter);
     }
 }
