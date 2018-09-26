@@ -7,3 +7,10 @@ before_install:
 
 after_success:
  - ./gradlew cobertura coveralls
+
+deploy:
+ - provider: script
+   script: ./gradlew bintrayUpload -PbintrayUser="${BINTRAY_USER}" -PbintrayKey="${BINTRAY_KEY}" -PdryRun=false
+   skip_cleanup: true
+   on:
+     tags: true
