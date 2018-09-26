@@ -45,6 +45,12 @@ QNCache cache = new QNCacheBuilder().setAutoReleaseInSeconds(60*60).createQNCach
 QNCache cache = new QNCacheBuilder().createQNCache(); //will never free the invalidated items from memory
 ```
 
+By the way, if you use the auto releaser, you should know that you can stop it. You should do it when your Servlet container notifies you that it wants to finish the application. Well, it's the same you should do with any database connection, for example. In Android environments you can avoid it, but you could be interested in [this extended explanation](https://github.com/Fewlaps/quitnow-cache/releases/tag/v3.2.0).
+
+```java
+cache.shutdown();
+```
+
 Are the keys case sensitive?
 ---------------------------
 By default, yes. But you can also specify it at building time.
@@ -81,7 +87,7 @@ cache.set("key", "value", 42, TimeUnit.SECONDS);
 ```groovy
 repositories { jcenter() }
     
-compile 'com.fewlaps.quitnowcache:quitnow-cache:3.1.0'
+compile 'com.fewlaps.quitnowcache:quitnow-cache:3.2.0'
 ```
 * Grab via Maven:
 ```xml
@@ -93,7 +99,7 @@ compile 'com.fewlaps.quitnowcache:quitnow-cache:3.1.0'
 <dependency>
     <groupId>com.fewlaps.quitnowcache</groupId>
     <artifactId>quitnow-cache</artifactId>
-    <version>3.1.0</version>
+    <version>3.2.0</version>
 </dependency>
 ```
 
