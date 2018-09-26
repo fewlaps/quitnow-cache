@@ -15,6 +15,7 @@ public class QNCache<T> {
     private Integer autoReleaseInSeconds;
     private Long defaultKeepaliveInMillis;
     private DateProvider dateProvider = DateProvider.SYSTEM;
+    private ScheduledExecutorService executorService = null;
 
     public QNCache(boolean caseSensitiveKeys, Integer autoReleaseInSeconds, Long defaultKeepaliveInMillis) {
         this.caseSensitiveKeys = caseSensitiveKeys;
@@ -30,11 +31,17 @@ public class QNCache<T> {
         startAutoReleaseServiceIfNeeded();
     }
 
+    public void shutdown() {
+        clear();
+        if (executorService != null) {
+            executorService.shutdown();
+        }
+    }
+
     private void startAutoReleaseServiceIfNeeded() {
         if (autoReleaseInSeconds != null) {
-            ScheduledExecutorService ses = Executors.newSingleThreadScheduledExecutor();
-
-            ses.scheduleAtFixedRate(new Runnable() {
+            executorService = Executors.newSingleThreadScheduledExecutor();
+            executorService.scheduleAtFixedRate(new Runnable() {
                 @Override
                 public void run() {
                     purge();
