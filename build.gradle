@@ -35,7 +35,7 @@ publish {
     groupId = 'com.fewlaps.quitnowcache'
     artifactId = 'quitnow-cache'
     publishVersion = project.version
-    desc = 'A memcached-like Java cache, focused on portability'
+    desc = 'A collection to store data for a given time'
     website = 'https://github.com/Fewlaps/quitnow-cache'
 }
 
