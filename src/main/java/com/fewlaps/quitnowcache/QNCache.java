@@ -285,4 +285,39 @@ public class QNCache<T> {
         }
         return key;
     }
+
+    public static class Builder {
+        private boolean caseSensitiveKeys = true;
+        private Integer autoReleaseInSeconds;
+        private long defaultKeepaliveInMillis = QNCache.KEEPALIVE_FOREVER;
+
+        public Builder caseSensitiveKeys(boolean caseSensitiveKeys) {
+            this.caseSensitiveKeys = caseSensitiveKeys;
+            return this;
+        }
+
+        public Builder autoRelease(int units, TimeUnit timeUnit) {
+            this.autoReleaseInSeconds = Long.valueOf(timeUnit.toSeconds(units)).intValue();
+            return this;
+        }
+
+        public Builder autoReleaseInSeconds(Integer autoReleaseInSeconds) {
+            this.autoReleaseInSeconds = autoReleaseInSeconds;
+            return this;
+        }
+
+        public Builder defaultKeepalive(int units, TimeUnit timeUnit) {
+            this.defaultKeepaliveInMillis = timeUnit.toMillis(units);
+            return this;
+        }
+
+        public Builder defaultKeepaliveInMillis(long defaultKeepaliveInMillis) {
+            this.defaultKeepaliveInMillis = defaultKeepaliveInMillis;
+            return this;
+        }
+
+        public <T> QNCache<T> build() {
+            return new QNCache<T>(caseSensitiveKeys, autoReleaseInSeconds, defaultKeepaliveInMillis);
+        }
+    }
 }

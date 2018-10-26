@@ -2,6 +2,11 @@ package com.fewlaps.quitnowcache;
 
 import java.util.concurrent.TimeUnit;
 
+/**
+ *
+ * @deprecated Use QNCache.builder() instead.
+ */
+@Deprecated
 public class QNCacheBuilder {
     private boolean caseSensitiveKeys = true;
     private Integer autoReleaseInSeconds;
