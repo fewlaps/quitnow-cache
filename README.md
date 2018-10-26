@@ -88,7 +88,7 @@ cache.set("key", "value", 42, TimeUnit.SECONDS);
 ```groovy
 repositories { jcenter() }
     
-compile 'com.fewlaps.quitnowcache:quitnow-cache:3.3.0'
+compile 'com.fewlaps.quitnowcache:quitnow-cache:3.4.0'
 ```
 * Grab via Maven:
 ```xml
@@ -100,7 +100,7 @@ compile 'com.fewlaps.quitnowcache:quitnow-cache:3.3.0'
 <dependency>
     <groupId>com.fewlaps.quitnowcache</groupId>
     <artifactId>quitnow-cache</artifactId>
-    <version>3.3.0</version>
+    <version>3.4.0</version>
 </dependency>
 ```
 
