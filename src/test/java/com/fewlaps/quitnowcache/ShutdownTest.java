@@ -9,14 +9,14 @@ public class ShutdownTest extends BaseTest {
 
     @Test
     public void shutdownClearsTheCache() {
-        QNCache cache = new QNCacheBuilder().setAutoReleaseInSeconds(1).createQNCache();
+        QNCache cache = new QNCache.Builder().autoReleaseInSeconds(1).build();
         cache.shutdown();
         assertEquals(0, cache.size());
     }
 
     @Test
     public void shutdownFinishesTheAutoreleaserThread() throws InterruptedException {
-        QNCache cache = new QNCacheBuilder().setAutoReleaseInSeconds(1).createQNCache();
+        QNCache cache = new QNCache.Builder().autoReleaseInSeconds(1).build();
 
         int threadsBeforeShutdown = Thread.activeCount();
 
@@ -30,7 +30,7 @@ public class ShutdownTest extends BaseTest {
     
     @Test
     public void shutdownDoesntCrashIfAutoreleaserIsOff() {
-        QNCache cache = new QNCacheBuilder().createQNCache();
+        QNCache cache = new QNCache.Builder().build();
         cache.shutdown();
     }
 

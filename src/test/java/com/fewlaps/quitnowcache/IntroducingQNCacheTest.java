@@ -9,7 +9,7 @@ public class IntroducingQNCacheTest {
     public void theCodeOfTheReadmeWorks() {
         //##The sample
 
-        QNCache cache = new QNCacheBuilder().createQNCache();
+        QNCache cache = new QNCache.Builder().build();
 
         cache.set("key", "value", 60 * 1000); // It can store things for a minute,
         cache.set("key", "value", 60 * 60 * 1000); // for an hour,
@@ -25,23 +25,23 @@ public class IntroducingQNCacheTest {
         cache.clear(); // You can also clean it,
         cache.size(); // and ask it how many elements it has
 
-        QNCache<String> stringCache = new QNCacheBuilder().createQNCache(); //You can also make it typesafe
+        QNCache<String> stringCache = new QNCache.Builder().build(); //You can also make it typesafe
         //stringCache.set("key", 42); //so this will not compile :)
 
         //##Let's talk about the memory
-        cache = new QNCacheBuilder().setAutoReleaseInSeconds(1).createQNCache(); //frees the memory every second
-        cache = new QNCacheBuilder().setAutoReleaseInSeconds(60).createQNCache(); //frees the memory every minute
-        cache = new QNCacheBuilder().setAutoReleaseInSeconds(60*60).createQNCache(); //frees the memory every hour
-        cache = new QNCacheBuilder().createQNCache(); //never frees the memory
+        cache = new QNCache.Builder().autoReleaseInSeconds(1).build(); //frees the memory every second
+        cache = new QNCache.Builder().autoReleaseInSeconds(60).build(); //frees the memory every minute
+        cache = new QNCache.Builder().autoReleaseInSeconds(60*60).build(); //frees the memory every hour
+        cache = new QNCache.Builder().build(); //never frees the memory
 
         //##Are the keys case sensitive?
-        cache = new QNCacheBuilder().setCaseSensitiveKeys(true).createQNCache(); //"key" and "KEY" will be different items
-        cache = new QNCacheBuilder().setCaseSensitiveKeys(false).createQNCache(); //"key" and "KEY" will be the same
-        cache = new QNCacheBuilder().createQNCache(); //"key" and "KEY" will be different items
+        cache = new QNCache.Builder().caseSensitiveKeys(true).build(); //"key" and "KEY" will be different items
+        cache = new QNCache.Builder().caseSensitiveKeys(false).build(); //"key" and "KEY" will be the same
+        cache = new QNCache.Builder().build(); //"key" and "KEY" will be different items
 
         //##It's possible to change the default keepalive?
-        cache = new QNCacheBuilder().setDefaultKeepaliveInMillis(1000).createQNCache(); //a keepalive of one second
-        cache = new QNCacheBuilder().setDefaultKeepaliveInMillis(1000 * 60).createQNCache(); //a keepalive of one minute
-        cache = new QNCacheBuilder().createQNCache(); //the default keepalive: remember it forever!
+        cache = new QNCache.Builder().defaultKeepaliveInMillis(1000).build(); //a keepalive of one second
+        cache = new QNCache.Builder().defaultKeepaliveInMillis(1000 * 60).build(); //a keepalive of one minute
+        cache = new QNCache.Builder().build(); //the default keepalive: remember it forever!
     }
 }

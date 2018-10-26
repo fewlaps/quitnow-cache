@@ -9,7 +9,7 @@ public class DefaultKeepaliveTest extends BaseTest {
 
     @Test
     public void shouldHaveInfiniteKeepaliveByDefault() {
-        QNCache<String> cache = new QNCacheBuilder().createQNCache();
+        QNCache<String> cache = new QNCache.Builder().build();
         MockDateProvider dateProvider = new MockDateProvider();
         cache.setDateProvider(dateProvider);
 
@@ -22,7 +22,7 @@ public class DefaultKeepaliveTest extends BaseTest {
 
     @Test
     public void testOneSecondKeepaliveRightNow() {
-        QNCache<String> cache = new QNCacheBuilder().setDefaultKeepaliveInMillis(ONE_SECOND).createQNCache();
+        QNCache<String> cache = new QNCache.Builder().defaultKeepaliveInMillis(ONE_SECOND).build();
         MockDateProvider dateProvider = new MockDateProvider();
         cache.setDateProvider(dateProvider);
 
@@ -33,7 +33,7 @@ public class DefaultKeepaliveTest extends BaseTest {
 
     @Test
     public void testOneSecondKeepaliveAfterOneSecond() {
-        QNCache<String> cache = new QNCacheBuilder().setDefaultKeepaliveInMillis(ONE_SECOND).createQNCache();
+        QNCache<String> cache = new QNCache.Builder().defaultKeepaliveInMillis(ONE_SECOND).build();
         MockDateProvider dateProvider = new MockDateProvider();
         cache.setDateProvider(dateProvider);
 
@@ -46,7 +46,7 @@ public class DefaultKeepaliveTest extends BaseTest {
 
     @Test
     public void testOneSecondKeepaliveAfterTwoHours() {
-        QNCache<String> cache = new QNCacheBuilder().setDefaultKeepaliveInMillis(ONE_SECOND).createQNCache();
+        QNCache<String> cache = new QNCache.Builder().defaultKeepaliveInMillis(ONE_SECOND).build();
         MockDateProvider dateProvider = new MockDateProvider();
         cache.setDateProvider(dateProvider);
 
@@ -59,7 +59,7 @@ public class DefaultKeepaliveTest extends BaseTest {
 
     @Test
     public void testTwoSecondsKeepaliveAfterOneSecond() {
-        QNCache<String> cache = new QNCacheBuilder().setDefaultKeepaliveInMillis(2 * ONE_SECOND).createQNCache();
+        QNCache<String> cache = new QNCache.Builder().defaultKeepaliveInMillis(2 * ONE_SECOND).build();
         MockDateProvider dateProvider = new MockDateProvider();
         cache.setDateProvider(dateProvider);
 

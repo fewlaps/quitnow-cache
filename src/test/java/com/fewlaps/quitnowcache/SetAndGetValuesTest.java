@@ -17,7 +17,7 @@ public class SetAndGetValuesTest extends BaseTest {
 
     @Before
     public void init() {
-        cache = new QNCacheBuilder().createQNCache();
+        cache = new QNCache.Builder().build();
         dateProvider = new MockDateProvider();
         cache.setDateProvider(dateProvider);
     }

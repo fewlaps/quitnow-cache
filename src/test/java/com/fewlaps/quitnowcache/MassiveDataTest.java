@@ -10,7 +10,7 @@ public class MassiveDataTest extends BaseTest {
 
     @Before
     public void init() {
-        cache = new QNCacheBuilder().createQNCache();
+        cache = new QNCache.Builder().build();
     }
 
     @Test

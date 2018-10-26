@@ -14,7 +14,7 @@ public class MemoryReleaseTest extends BaseTest {
 
     @Test
     public void manualReleaseMemoryWorks() throws InterruptedException {
-        QNCache<String> cache = new QNCacheBuilder().createQNCache();
+        QNCache<String> cache = new QNCache.Builder().build();
 
         //adding 3 values that will be alive for 1 second, 2 seconds, 3 seconds.
         cache.set("1", A_VALUE, 1000);
@@ -40,7 +40,7 @@ public class MemoryReleaseTest extends BaseTest {
 
     @Test
     public void autoReleaseMemoryWorks() throws InterruptedException {
-        QNCache<String> cache = new QNCacheBuilder().setAutoReleaseInSeconds(1).createQNCache();
+        QNCache<String> cache = new QNCache.Builder().autoReleaseInSeconds(1).build();
 
         //adding 3 values that will be alive for 1 second, 2 seconds, 3 seconds.
         cache.set("1", A_VALUE, 1000);
@@ -57,7 +57,7 @@ public class MemoryReleaseTest extends BaseTest {
     public void autoReleaserCreatesAThread() {
         int threadsBefore = Thread.activeCount();
 
-        new QNCacheBuilder().setAutoReleaseInSeconds(1).createQNCache();
+        new QNCache.Builder().autoReleaseInSeconds(1).build();
 
         int threadsAfter = Thread.activeCount();
 
