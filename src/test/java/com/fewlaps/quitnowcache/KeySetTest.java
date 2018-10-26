@@ -33,6 +33,17 @@ public class KeySetTest extends BaseTest {
     }
 
     @Test
+    public void keySetReturnsOnlyAliveKeys() {
+        cache.set("a", A_VALUE);
+        cache.set("b", A_VALUE);
+        cache.set("c", A_VALUE, ONE_SECOND);
+
+        dateProvider.setFixed(threeDaysFromNow());
+
+        assertEquals(2, cache.keySet().size());
+    }
+
+    @Test
     public void keySetAliveReturnsOnlyAliveKeys() {
         cache.set("a", A_VALUE);
         cache.set("b", A_VALUE);

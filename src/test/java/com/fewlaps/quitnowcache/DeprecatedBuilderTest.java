@@ -4,6 +4,8 @@ import org.junit.Test;
 
 import java.util.concurrent.TimeUnit;
 
+import static com.fewlaps.quitnowcache.QNCache.KEEPALIVE_FOREVER;
+import static com.fewlaps.quitnowcache.QNCache.WITHOUT_AUTORELEASE;
 import static org.junit.Assert.*;
 
 public class DeprecatedBuilderTest {
@@ -12,113 +14,113 @@ public class DeprecatedBuilderTest {
     public void testDefaultBuilder() {
         QNCache<Object> cache = new QNCacheBuilder().createQNCache();
 
-        assertTrue(cache.isCaseSensitiveKeys());
-        assertNull(cache.getAutoReleaseInSeconds());
-        assertNull(cache.getDefaultKeepaliveInMillis());
+        assertTrue(cache.getCaseSensitiveKeys());
+        assertEquals(WITHOUT_AUTORELEASE, cache.getAutoReleaseInSeconds());
+        assertEquals(KEEPALIVE_FOREVER, cache.getDefaultKeepaliveInMillis());
     }
 
     @Test
-    public void testSettingTrueCaseSensitiveKeysBuilder() {
-        QNCache<Object>  cache = new QNCacheBuilder().setCaseSensitiveKeys(true).createQNCache();
+    public void testSettingTruesetCaseSensitiveKeysBuilder() {
+        QNCache<Object> cache = new QNCacheBuilder().setCaseSensitiveKeys(true).createQNCache();
 
-        assertTrue(cache.isCaseSensitiveKeys());
+        assertTrue(cache.getCaseSensitiveKeys());
     }
 
     @Test
-    public void testSettingFalseCaseSensitiveKeysBuilder() {
-        QNCache<Object>  cache = new QNCacheBuilder().setCaseSensitiveKeys(false).createQNCache();
+    public void testSettingFalsesetCaseSensitiveKeysBuilder() {
+        QNCache<Object> cache = new QNCacheBuilder().setCaseSensitiveKeys(false).createQNCache();
 
-        assertFalse(cache.isCaseSensitiveKeys());
+        assertFalse(cache.getCaseSensitiveKeys());
     }
 
     @Test
-    public void testSettingMinusOneAutoReleaseSecondsBuilder() {
-        QNCache<Object>  cache = new QNCacheBuilder().setAutoReleaseInSeconds(-1).createQNCache();
+    public void testSettingMinusOnesetAutoReleaseSecondsBuilder() {
+        QNCache<Object> cache = new QNCacheBuilder().setAutoReleaseInSeconds(-1).createQNCache();
 
-        assertNull(cache.getAutoReleaseInSeconds());
+        assertEquals(WITHOUT_AUTORELEASE, cache.getAutoReleaseInSeconds());
     }
 
     @Test
-    public void testSetting10AutoReleaseSecondsBuilder() {
-        QNCache<Object>  cache = new QNCacheBuilder().setAutoReleaseInSeconds(10).createQNCache();
+    public void testSetting10setAutoReleaseSecondsBuilder() {
+        QNCache<Object> cache = new QNCacheBuilder().setAutoReleaseInSeconds(10).createQNCache();
 
-        assertEquals(Integer.valueOf(10), cache.getAutoReleaseInSeconds());
+        assertEquals(10, cache.getAutoReleaseInSeconds());
     }
 
     @Test
-    public void testSetting10AutoReleaseSecondsBuilder_usingSecondsTimeUnit() {
-        QNCache<Object>  cache = new QNCacheBuilder().setAutoRelease(10, TimeUnit.SECONDS).createQNCache();
+    public void testSetting10setAutoReleaseSecondsBuilder_usingSecondsTimeUnit() {
+        QNCache<Object> cache = new QNCacheBuilder().setAutoRelease(10, TimeUnit.SECONDS).createQNCache();
 
-        assertEquals(Integer.valueOf(10), cache.getAutoReleaseInSeconds());
+        assertEquals(10, cache.getAutoReleaseInSeconds());
     }
 
     @Test
-    public void testSetting10AutoReleaseSecondsBuilder_usingMillisTimeUnit() {
-        QNCache<Object>  cache = new QNCacheBuilder().setAutoRelease(10000, TimeUnit.MILLISECONDS).createQNCache();
+    public void testSetting10setAutoReleaseSecondsBuilder_usingMillisTimeUnit() {
+        QNCache<Object> cache = new QNCacheBuilder().setAutoRelease(10000, TimeUnit.MILLISECONDS).createQNCache();
 
-        assertEquals(Integer.valueOf(10), cache.getAutoReleaseInSeconds());
+        assertEquals(10, cache.getAutoReleaseInSeconds());
     }
 
     @Test
-    public void testSetting10AutoReleaseSecondsBuilder_usingMicrosTimeUnit() {
-        QNCache<Object>  cache = new QNCacheBuilder().setAutoRelease(10000000, TimeUnit.MICROSECONDS).createQNCache();
+    public void testSetting10setAutoReleaseSecondsBuilder_usingMicrosTimeUnit() {
+        QNCache<Object> cache = new QNCacheBuilder().setAutoRelease(10000000, TimeUnit.MICROSECONDS).createQNCache();
 
-        assertEquals(Integer.valueOf(10), cache.getAutoReleaseInSeconds());
+        assertEquals(10, cache.getAutoReleaseInSeconds());
     }
 
     @Test
-    public void testSettingDefaultKeepaliveBuilder_with10() {
-        QNCache<Object>  cache = new QNCacheBuilder().setDefaultKeepaliveInMillis(10).createQNCache();
+    public void testSettingsetDefaultKeepaliveBuilder_with10() {
+        QNCache<Object> cache = new QNCacheBuilder().setDefaultKeepaliveInMillis(10).createQNCache();
 
-        assertEquals(Long.valueOf(10), cache.getDefaultKeepaliveInMillis());
+        assertEquals(10, cache.getDefaultKeepaliveInMillis());
     }
 
     @Test
-    public void testSettingDefaultKeepaliveBuilder_with10000MillisTimeUnits() {
-        QNCache<Object>  cache = new QNCacheBuilder().setDefaultKeepalive(10000, TimeUnit.MILLISECONDS).createQNCache();
+    public void testSettingsetDefaultKeepaliveBuilder_with10000MillisTimeUnits() {
+        QNCache<Object> cache = new QNCacheBuilder().setDefaultKeepalive(10000, TimeUnit.MILLISECONDS).createQNCache();
 
-        assertEquals(Long.valueOf(10000), cache.getDefaultKeepaliveInMillis());
+        assertEquals(10000, cache.getDefaultKeepaliveInMillis());
     }
 
     @Test
-    public void testSettingDefaultKeepaliveBuilder_with10SecondsTimeUnits() {
-        QNCache<Object>  cache = new QNCacheBuilder().setDefaultKeepalive(10, TimeUnit.SECONDS).createQNCache();
+    public void testSettingsetDefaultKeepaliveBuilder_with10SecondsTimeUnits() {
+        QNCache<Object> cache = new QNCacheBuilder().setDefaultKeepalive(10, TimeUnit.SECONDS).createQNCache();
 
-        assertEquals(Long.valueOf(10000), cache.getDefaultKeepaliveInMillis());
+        assertEquals(10000, cache.getDefaultKeepaliveInMillis());
     }
 
     @Test
-    public void testSettingDefaultKeepaliveBuilder_withZero() {
-        QNCache<Object>  cache = new QNCacheBuilder().setDefaultKeepaliveInMillis(0).createQNCache();
+    public void testSettingsetDefaultKeepaliveBuilder_withZero() {
+        QNCache<Object> cache = new QNCacheBuilder().setDefaultKeepaliveInMillis(0).createQNCache();
 
-        assertNull(cache.getDefaultKeepaliveInMillis());
+        assertEquals(KEEPALIVE_FOREVER, cache.getDefaultKeepaliveInMillis());
     }
 
     @Test
-    public void testSettingDefaultKeepaliveBuilder_withZeroSecondsTimeUnit() {
-        QNCache<Object>  cache = new QNCacheBuilder().setDefaultKeepalive(0, TimeUnit.SECONDS).createQNCache();
+    public void testSettingsetDefaultKeepaliveBuilder_withZeroSecondsTimeUnit() {
+        QNCache<Object> cache = new QNCacheBuilder().setDefaultKeepalive(0, TimeUnit.SECONDS).createQNCache();
 
-        assertNull(cache.getDefaultKeepaliveInMillis());
+        assertEquals(KEEPALIVE_FOREVER, cache.getDefaultKeepaliveInMillis());
     }
 
     @Test
-    public void testSettingDefaultKeepaliveBuilder_withMinusTen() {
-        QNCache<Object>  cache = new QNCacheBuilder().setDefaultKeepaliveInMillis(-10).createQNCache();
+    public void testSettingsetDefaultKeepaliveBuilder_withMinusTen() {
+        QNCache<Object> cache = new QNCacheBuilder().setDefaultKeepaliveInMillis(-10).createQNCache();
 
-        assertNull(cache.getDefaultKeepaliveInMillis());
+        assertEquals(KEEPALIVE_FOREVER, cache.getDefaultKeepaliveInMillis());
     }
 
     @Test
-    public void testSettingDefaultKeepaliveBuilder_withMinusTenSecondsTimeUnit() {
-        QNCache<Object>  cache = new QNCacheBuilder().setDefaultKeepalive(-10, TimeUnit.SECONDS).createQNCache();
+    public void testSettingsetDefaultKeepaliveBuilder_withMinusTenSecondsTimeUnit() {
+        QNCache<Object> cache = new QNCacheBuilder().setDefaultKeepalive(-10, TimeUnit.SECONDS).createQNCache();
 
-        assertNull(cache.getDefaultKeepaliveInMillis());
+        assertEquals(KEEPALIVE_FOREVER, cache.getDefaultKeepaliveInMillis());
     }
 
     @Test
-    public void testQNCacheDefaultKeepaliveIsForever() {
-        QNCache<Object>  cache = new QNCacheBuilder().setDefaultKeepaliveInMillis(QNCache.KEEPALIVE_FOREVER).createQNCache();
+    public void testQNCachesetDefaultKeepaliveIsForever() {
+        QNCache<Object> cache = new QNCacheBuilder().setDefaultKeepaliveInMillis(KEEPALIVE_FOREVER).createQNCache();
 
-        assertNull(cache.getDefaultKeepaliveInMillis());
+        assertEquals(KEEPALIVE_FOREVER, cache.getDefaultKeepaliveInMillis());
     }
 }

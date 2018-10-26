@@ -2,6 +2,7 @@ group 'com.fewlaps.quitnowcache'
 version '3.3.0'
 
 apply plugin: 'java'
+apply plugin: 'kotlin'
 apply plugin: 'com.novoda.bintray-release'
 apply plugin: 'cobertura'
 apply plugin: 'com.github.kt3k.coveralls'
@@ -11,10 +12,12 @@ repositories {
 }
 
 dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     testCompile group: 'junit', name: 'junit', version: '4.11'
 }
 
 buildscript {
+    ext.kotlin_version = '1.2.71'
     repositories {
         jcenter()
     }
@@ -22,12 +25,8 @@ buildscript {
         classpath 'com.novoda:bintray-release:0.3.4'
         classpath 'net.saliman:gradle-cobertura-plugin:2.0.0'
         classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.4.0'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
-}
-
-compileJava {
-    sourceCompatibility = 1.6
-    targetCompatibility = 1.6
 }
 
 publish {
@@ -43,4 +42,20 @@ dependencies {
     testCompile 'org.mockito:mockito-all:1.8.4'
 }
 
-cobertura.coverageFormats = ['html', 'xml'] // coveralls plugin depends on xml format report
+cobertura.coverageFormats = ['html', 'xml']
+// coveralls plugin depends on xml format report
+
+compileJava {
+    sourceCompatibility = 1.6
+    targetCompatibility = 1.6
+}
+compileKotlin {
+    kotlinOptions {
+        jvmTarget = "1.6"
+    }
+}
+compileTestKotlin {
+    kotlinOptions {
+        jvmTarget = "1.6"
+    }
+}

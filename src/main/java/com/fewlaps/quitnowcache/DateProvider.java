@@ -1,9 +1,8 @@
 package com.fewlaps.quitnowcache;
 
-interface DateProvider {
+public interface DateProvider {
 
     DateProvider SYSTEM = new DateProvider() {
-
         @Override
         public long now() {
             return System.currentTimeMillis();

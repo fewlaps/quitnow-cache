@@ -2,14 +2,16 @@ package com.fewlaps.quitnowcache;
 
 import java.util.concurrent.TimeUnit;
 
+import static com.fewlaps.quitnowcache.QNCache.KEEPALIVE_FOREVER;
+import static com.fewlaps.quitnowcache.QNCache.WITHOUT_AUTORELEASE;
+
 /**
- *
  * @deprecated Use QNCache.builder() instead.
  */
 @Deprecated
 public class QNCacheBuilder {
     private boolean caseSensitiveKeys = true;
-    private Integer autoReleaseInSeconds;
+    private int autoReleaseInSeconds = QNCache.WITHOUT_AUTORELEASE;
     private long defaultKeepaliveInMillis = QNCache.KEEPALIVE_FOREVER;
 
     public QNCacheBuilder setCaseSensitiveKeys(boolean caseSensitiveKeys) {
@@ -22,7 +24,7 @@ public class QNCacheBuilder {
         return this;
     }
 
-    public QNCacheBuilder setAutoReleaseInSeconds(Integer autoReleaseInSeconds) {
+    public QNCacheBuilder setAutoReleaseInSeconds(int autoReleaseInSeconds) {
         this.autoReleaseInSeconds = autoReleaseInSeconds;
         return this;
     }
@@ -38,6 +40,12 @@ public class QNCacheBuilder {
     }
 
     public <T> QNCache<T> createQNCache() {
+        if (autoReleaseInSeconds < 0) {
+            autoReleaseInSeconds = WITHOUT_AUTORELEASE;
+        }
+        if (defaultKeepaliveInMillis < 0) {
+            defaultKeepaliveInMillis = KEEPALIVE_FOREVER;
+        }
         return new QNCache<T>(caseSensitiveKeys, autoReleaseInSeconds, defaultKeepaliveInMillis);
     }
 }
