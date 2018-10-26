@@ -14,7 +14,7 @@ The sample
 ----------
 
 ```java
-QNCache cache = new QNCacheBuilder().createQNCache();
+QNCache cache = new QNCache.Builder().build();
 
 cache.set("key", "value", 60 * 1000); // It can store things for a minute,
 cache.set("key", "value", 60 * 60 * 1000); // for an hour,
@@ -27,11 +27,11 @@ cache.remove("key"); // and remove it if you want.
 cache.get("unExistingKey"); // If something doesn't exists, it returns null
 cache.get("tooOldKey"); // The same if a key is too old
 
-cache.clear(); // You can also clear it,
+cache.clear(); // You can also clean it,
 cache.size(); // and ask it how many elements it has
 
-QNCache<String> stringCache = new QNCacheBuilder().createQNCache(); // You can also make it typesafe
-stringCache.set("key", 42); // so this line does not compile :)
+QNCache<String> stringCache = new QNCache.Builder().build(); // You can also make it typesafe
+stringCache.set("key", 42); // so this won't compile :)
 ```
 
 Let's talk about the memory
@@ -39,10 +39,11 @@ Let's talk about the memory
 By default, the cache stores a reference to all stored instances, doesn't matter if they're fresh or not. If you plan to store huge instances, like an Android's Bitmap, you can create it with an auto releaser. Then the cache will remove the old elements after the given amount of time.
 
 ```java
-QNCache cache = new QNCacheBuilder().setAutoReleaseInSeconds(1).createQNCache(); //frees the memory every second
-QNCache cache = new QNCacheBuilder().setAutoReleaseInSeconds(60).createQNCache(); //frees the memory every minute
-QNCache cache = new QNCacheBuilder().setAutoReleaseInSeconds(60*60).createQNCache(); //frees the memory every hour
-QNCache cache = new QNCacheBuilder().createQNCache(); //will never free the invalidated items from memory
+new QNCache.Builder().autoReleaseInSeconds(1).build(); // rees the memory every second
+new QNCache.Builder().autoReleaseInSeconds(60).build(); // frees the memory every minute
+new QNCache.Builder().autoReleaseInSeconds(60*60).build(); // frees the memory every hour
+new QNCache.Builder().build(); // never frees the memory
+
 ```
 
 By the way, if you use the auto releaser, you should know that you can stop it. You should do it when your Servlet container notifies you that it wants to finish the application. Well, it's the same you should do with any database connection, for example. In Android environments you can avoid it, but you could be interested in [this extended explanation](https://github.com/Fewlaps/quitnow-cache/releases/tag/v3.2.0).
@@ -56,9 +57,9 @@ Are the keys case sensitive?
 By default, yes. But you can also specify it at building time.
 
 ```java
-QNCache cache = new QNCacheBuilder().setCaseSensitiveKeys(true).createQNCache(); //"key" and "KEY" will be different items
-QNCache cache = new QNCacheBuilder().setCaseSensitiveKeys(false).createQNCache(); //"key" and "KEY" will be the same
-QNCache cache = new QNCacheBuilder().createQNCache(); //"key" and "KEY" will be different items
+new QNCache.Builder().caseSensitiveKeys(true).build(); // "key" and "KEY" will be different items
+new QNCache.Builder().caseSensitiveKeys(false).build(); // "key" and "KEY" will be the same
+new QNCache.Builder().build(); // "key" and "KEY" will be different items
 ```
 
 It's possible to change the default keepalive?
@@ -66,9 +67,9 @@ It's possible to change the default keepalive?
 Of course! But, again, you have to specify it at building time.
 
 ```java
-QNCache cache = new QNCacheBuilder().setDefaultKeepaliveInMillis(1000).createQNCache(); //a keepalive of one second
-QNCache cache = new QNCacheBuilder().setDefaultKeepaliveInMillis(1000 * 60).createQNCache(); //a keepalive of one minute
-QNCache cache = new QNCacheBuilder().createQNCache(); //the default keepalive: remember it forever!
+new QNCache.Builder().defaultKeepaliveInMillis(1000).build(); // a keepalive of one second
+new QNCache.Builder().defaultKeepaliveInMillis(1000 * 60).build(); // a keepalive of one minute
+new QNCache.Builder().build(); // the default keepalive: remember it forever!
 ```
 
 Why working with millis and seconds?
@@ -76,8 +77,8 @@ Why working with millis and seconds?
 Good question! If you prefer to work with TimeUnit, you're free to do it.
 
 ```java
-QNCache cache = new QNCacheBuilder().setAutoRelease(2, TimeUnit.HOURS).createQNCache();
-QNCache cache = new QNCacheBuilder().setDefaultKeepalive(5, TimeUnit.MINUTES).createQNCache();
+new QNCache.Builder().autoRelease(2, TimeUnit.HOURS).build();
+new QNCache.Builder().defaultKeepalive(5, TimeUnit.MINUTES).build();
 cache.set("key", "value", 42, TimeUnit.SECONDS);
 ```
 
