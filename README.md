@@ -4,7 +4,7 @@
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Fewlaps/quitnow-cache?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 # [QuitNow!](http://quitnowapp.com)'s cache
-A memcached-like Java cache, focused on portability, great for Android.
+A temporary cache for JVM applications.
 
 Before this library, caching data for a limited time was a hard task to do. The developer had to save the last time the data was stored, and then, check it everytime the data was read. So, we decided to return the work to the open source community by writing this really simple cache, allowing developers to keep information for a limited time.
 
