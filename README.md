@@ -39,7 +39,7 @@ Let's talk about the memory
 By default, the cache stores a reference to all stored instances, doesn't matter if they're fresh or not. If you plan to store huge instances, like an Android's Bitmap, you can create it with an auto releaser. Then the cache will remove the old elements after the given amount of time.
 
 ```java
-new QNCache.Builder().autoReleaseInSeconds(1).build(); // rees the memory every second
+new QNCache.Builder().autoReleaseInSeconds(1).build(); // frees the memory every second
 new QNCache.Builder().autoReleaseInSeconds(60).build(); // frees the memory every minute
 new QNCache.Builder().autoReleaseInSeconds(60*60).build(); // frees the memory every hour
 new QNCache.Builder().build(); // never frees the memory
