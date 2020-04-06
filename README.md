@@ -24,7 +24,7 @@ cache.set("key", "value"); // And also for the short version of forever.
 cache.get("key"); // It can get them again,
 cache.remove("key"); // and remove it if you want.
 
-cache.get("unExistingKey"); // If something doesn't exists, it returns null
+cache.get("unexistingKey"); // If something doesn't exist, it returns null
 cache.get("tooOldKey"); // The same if a key is too old
 
 cache.clear(); // You can also clean it,
@@ -46,7 +46,7 @@ new QNCache.Builder().build(); // never frees the memory
 
 ```
 
-By the way, if you use the auto releaser, you should know that you can stop it. You should do it when your Servlet container notifies you that it wants to finish the application. Well, it's the same you should do with any database connection, for example. In Android environments you can avoid it, but you could be interested in [this extended explanation](https://github.com/Fewlaps/quitnow-cache/releases/tag/v3.2.0).
+By the way, if you use the auto releaser, you should know that you can stop it. You should do it when your Servlet container notifies you that it wants to finish the application. It's the same you should do with any database connection, for example. In Android environments you can avoid it, but you could be interested in [this extended explanation](https://github.com/Fewlaps/quitnow-cache/releases/tag/v3.2.0).
 
 ```java
 cache.shutdown();
@@ -54,7 +54,7 @@ cache.shutdown();
 
 Are the keys case sensitive?
 ---------------------------
-By default, yes. But you can also specify it at building time.
+By default, yes. But you can specify it at building time.
 
 ```java
 new QNCache.Builder().caseSensitiveKeys(true).build(); // "key" and "KEY" will be different items
