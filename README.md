@@ -46,7 +46,7 @@ new QNCache.Builder().build(); // never frees the memory
 
 ```
 
-By the way, if you use the auto releaser, you should know that you can stop it. You should do it when your Servlet container notifies you that it wants to finish the application. It's the same you should do with any database connection, for example. In Android environments you can avoid it, but you could be interested in [this extended explanation](https://github.com/Fewlaps/quitnow-cache/releases/tag/v3.2.0).
+By the way, if you use the auto releaser, you should know that you can stop it. You should do it when your Servlet container notifies you that it wants to finish the application. It's the same you should do with any database connection, for example. In Android environments you can avoid it, but you might be interested in [this extended explanation](https://github.com/Fewlaps/quitnow-cache/releases/tag/v3.2.0).
 
 ```java
 cache.shutdown();
